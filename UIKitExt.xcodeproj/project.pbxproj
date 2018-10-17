@@ -42,6 +42,7 @@
 		C314FCD021770AAA00F1623D /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C314FCCF21770AAA00F1623D /* NavigationController.swift */; };
 		C314FCD22177109000F1623D /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = C314FCD12177109000F1623D /* Date.swift */; };
 		C314FCD42177151C00F1623D /* CGGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = C314FCD32177151C00F1623D /* CGGeometry.swift */; };
+		C314FCD82177358300F1623D /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C314FCD72177358300F1623D /* BaseViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,6 +83,7 @@
 		C314FCCF21770AAA00F1623D /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		C314FCD12177109000F1623D /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		C314FCD32177151C00F1623D /* CGGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGGeometry.swift; sourceTree = "<group>"; };
+		C314FCD72177358300F1623D /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +165,7 @@
 				C314FCAE2176C7C700F1623D /* UITableView.swift */,
 				C314FCB02176C83D00F1623D /* UIView.swift */,
 				C314FCB22176CB1100F1623D /* UIViewController.swift */,
+				C314FCD72177358300F1623D /* BaseViewController.swift */,
 				C314FCBE2176E69400F1623D /* GradientView.swift */,
 				C314FCCF21770AAA00F1623D /* NavigationController.swift */,
 				C314FCC02176E77700F1623D /* ShapeView.swift */,
@@ -278,6 +281,7 @@
 				C314FCAB2175EE4E00F1623D /* UIScrollView.swift in Sources */,
 				C314FCA12175E9F500F1623D /* UICollectionView.swift in Sources */,
 				C314FC932175E83000F1623D /* Numbers.swift in Sources */,
+				C314FCD82177358300F1623D /* BaseViewController.swift in Sources */,
 				C314FCB32176CB1100F1623D /* UIViewController.swift in Sources */,
 				C314FCA52175EBEA00F1623D /* UIEdgeInsets.swift in Sources */,
 				C314FC9D2175E94500F1623D /* CALayer.swift in Sources */,
