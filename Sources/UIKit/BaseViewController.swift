@@ -100,6 +100,7 @@ open class BaseViewController: UIViewController {
     private func updateShowsCustomNavBar() {
         if showsCustomNavBar && customNavBar == nil {
             let bar = UINavigationBar()
+            bar.translatesAutoresizingMaskIntoConstraints = false
             bar.delegate = self
             bar.backIndicatorImage = BaseViewController.navBackImage
             bar.backIndicatorTransitionMaskImage = BaseViewController.navBackImage
@@ -186,6 +187,7 @@ open class BaseViewController: UIViewController {
 
     private func addButton(image: UIImage?, leading: Bool) -> UIButton {
         let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.image = image
         button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
         view.addSubview(button)
