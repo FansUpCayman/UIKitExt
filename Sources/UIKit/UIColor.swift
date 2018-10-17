@@ -27,10 +27,12 @@ import UIKit
 
 extension UIColor {
     public struct RGBA {
-        var red: CGFloat = 0
-        var green: CGFloat = 0
-        var blue: CGFloat = 0
-        var alpha: CGFloat = 1
+        public var red: CGFloat = 0
+        public var green: CGFloat = 0
+        public var blue: CGFloat = 0
+        public var alpha: CGFloat = 1
+
+        public init() {}
     }
 
     public var rgba: RGBA {

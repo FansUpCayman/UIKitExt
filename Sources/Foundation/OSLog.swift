@@ -25,7 +25,7 @@
 
 import os
 
-typealias Log = OSLog
+public typealias Log = OSLog
 
 @available(iOS 10.0, *)
 extension OSLog {
