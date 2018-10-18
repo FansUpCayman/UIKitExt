@@ -43,6 +43,9 @@
 		C314FCD22177109000F1623D /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = C314FCD12177109000F1623D /* Date.swift */; };
 		C314FCD42177151C00F1623D /* CGGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = C314FCD32177151C00F1623D /* CGGeometry.swift */; };
 		C314FCD82177358300F1623D /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C314FCD72177358300F1623D /* BaseViewController.swift */; };
+		C314FD1821787E2B00F1623D /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C314FD1721787E2B00F1623D /* NibLoadable.swift */; };
+		C314FD1A217884E300F1623D /* ColorfulView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C314FD19217884E300F1623D /* ColorfulView.swift */; };
+		C314FD1C2178891700F1623D /* ColorfulButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C314FD1B2178891700F1623D /* ColorfulButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -84,6 +87,9 @@
 		C314FCD12177109000F1623D /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		C314FCD32177151C00F1623D /* CGGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGGeometry.swift; sourceTree = "<group>"; };
 		C314FCD72177358300F1623D /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		C314FD1721787E2B00F1623D /* NibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
+		C314FD19217884E300F1623D /* ColorfulView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorfulView.swift; sourceTree = "<group>"; };
+		C314FD1B2178891700F1623D /* ColorfulButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorfulButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,8 +172,11 @@
 				C314FCB02176C83D00F1623D /* UIView.swift */,
 				C314FCB22176CB1100F1623D /* UIViewController.swift */,
 				C314FCD72177358300F1623D /* BaseViewController.swift */,
+				C314FD1B2178891700F1623D /* ColorfulButton.swift */,
+				C314FD19217884E300F1623D /* ColorfulView.swift */,
 				C314FCBE2176E69400F1623D /* GradientView.swift */,
 				C314FCCF21770AAA00F1623D /* NavigationController.swift */,
+				C314FD1721787E2B00F1623D /* NibLoadable.swift */,
 				C314FCC02176E77700F1623D /* ShapeView.swift */,
 				C314FCC42176EB0A00F1623D /* TextView.swift */,
 				C314FCC22176E97100F1623D /* VerticalButton.swift */,
@@ -287,6 +296,7 @@
 				C314FC9D2175E94500F1623D /* CALayer.swift in Sources */,
 				C314FC982175E83000F1623D /* Calendar.swift in Sources */,
 				C314FCD021770AAA00F1623D /* NavigationController.swift in Sources */,
+				C314FD1A217884E300F1623D /* ColorfulView.swift in Sources */,
 				C314FCA92175ECBD00F1623D /* UIScreen.swift in Sources */,
 				C314FCD42177151C00F1623D /* CGGeometry.swift in Sources */,
 				C314FC972175E83000F1623D /* Collection.swift in Sources */,
@@ -297,6 +307,7 @@
 				C314FC9B2175E8D500F1623D /* NSObject.swift in Sources */,
 				C314FC962175E83000F1623D /* Bundle.swift in Sources */,
 				C314FCA32175EAF500F1623D /* UIColor.swift in Sources */,
+				C314FD1821787E2B00F1623D /* NibLoadable.swift in Sources */,
 				C314FCD22177109000F1623D /* Date.swift in Sources */,
 				C314FCBF2176E69400F1623D /* GradientView.swift in Sources */,
 				C314FCAF2176C7C700F1623D /* UITableView.swift in Sources */,
@@ -309,6 +320,7 @@
 				C314FC952175E83000F1623D /* UserDefaults.swift in Sources */,
 				C314FCC52176EB0A00F1623D /* TextView.swift in Sources */,
 				C314FCC82177068600F1623D /* TableViewDecorator.swift in Sources */,
+				C314FD1C2178891700F1623D /* ColorfulButton.swift in Sources */,
 				C314FCB12176C83D00F1623D /* UIView.swift in Sources */,
 				C314FC9F2175E99100F1623D /* UIButton.swift in Sources */,
 			);
