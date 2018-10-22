@@ -25,16 +25,20 @@
 
 import Foundation
 
+public struct AssociatedKey<Value> {
+    let pointer = UnsafeRawPointer(UnsafeMutablePointer<UInt8>.allocate(capacity: 1))
+
+    public init() {}
+}
+
 extension NSObject {
-    public func associatedObject<Value>(key: UnsafeRawPointer) -> Value? {
-        return objc_getAssociatedObject(self, key) as? Value
+    public subscript<Value>(key: AssociatedKey<Value>) -> Value? {
+        get { return objc_getAssociatedObject(self, key.pointer) as? Value }
+        set { objc_setAssociatedObject(self, key.pointer, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
     }
 
-    public func setAssociatedObject(
-        key: UnsafeRawPointer,
-        value: Any?,
-        policy: objc_AssociationPolicy = .OBJC_ASSOCIATION_RETAIN_NONATOMIC
-    ) {
-        objc_setAssociatedObject(self, key, value, policy)
+    public subscript<Value>(key: AssociatedKey<Value>, default defaultValue: @autoclosure () -> Value) -> Value {
+        get { return self[key] ?? defaultValue() }
+        set { self[key] = newValue }
     }
 }

@@ -25,12 +25,12 @@
 
 import UIKit
 
-private var decoratorsKey: UInt8 = 0
+private let decoratorsKey = AssociatedKey<[TableViewDecorator]>()
 
 extension UITableView {
     public private(set) var decorators: [TableViewDecorator] {
-        get { return associatedObject(key: &decoratorsKey) ?? [] }
-        set { setAssociatedObject(key: &decoratorsKey, value: newValue) }
+        get { return self[decoratorsKey] ?? [] }
+        set { self[decoratorsKey] = newValue }
     }
 
     public func addDecorator(_ decorator: TableViewDecorator) {
