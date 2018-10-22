@@ -36,6 +36,22 @@ open class TableViewDecorator: NSObject, TableViewDecoratable {
     weak var tableView: UITableView?
     open weak var dataSource: UITableViewDataSource?
     open weak var delegate: UITableViewDelegate?
+
+    open override func responds(to aSelector: Selector!) -> Bool {
+        return super.responds(to: aSelector) ||
+            (dataSource?.responds(to: aSelector) ?? false) ||
+            (delegate?.responds(to: aSelector) ?? false)
+    }
+
+    open override func forwardingTarget(for aSelector: Selector!) -> Any? {
+        if (dataSource?.responds(to: aSelector) ?? false) {
+            return dataSource
+        } else if (delegate?.responds(to: aSelector) ?? false) {
+            return delegate
+        } else {
+            return nil
+        }
+    }
 }
 
 extension TableViewDecorator: UITableViewDataSource {
@@ -43,81 +59,9 @@ extension TableViewDecorator: UITableViewDataSource {
         return dataSource?.tableView(tableView, cellForRowAt: indexPath) ?? UITableViewCell()
     }
 
-    open func numberOfSections(in tableView: UITableView) -> Int {
-        return dataSource?.numberOfSections?(in: tableView) ?? 1
-    }
-
     open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataSource?.tableView(tableView, numberOfRowsInSection: section) ?? 0
     }
 }
 
-extension TableViewDecorator: UITableViewDelegate {
-    open func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        delegate?.scrollViewDidScroll?(scrollView)
-    }
-
-    open func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        delegate?.scrollViewWillBeginDragging?(scrollView)
-    }
-
-    open func scrollViewWillEndDragging(
-        _ scrollView: UIScrollView,
-        withVelocity velocity: CGPoint,
-        targetContentOffset: UnsafeMutablePointer<CGPoint>
-    ) {
-        delegate?.scrollViewWillEndDragging?(
-            scrollView,
-            withVelocity: velocity,
-            targetContentOffset: targetContentOffset
-        )
-    }
-
-    open func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        delegate?.scrollViewDidEndDragging?(scrollView, willDecelerate: decelerate)
-    }
-
-    open func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
-        delegate?.scrollViewWillBeginDecelerating?(scrollView)
-    }
-
-    open func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        delegate?.scrollViewDidEndDecelerating?(scrollView)
-    }
-
-    open func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        delegate?.scrollViewDidEndScrollingAnimation?(scrollView)
-    }
-
-    open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return delegate?.tableView?(tableView, heightForRowAt: indexPath) ?? tableView.rowHeight
-    }
-
-    open func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return delegate?.tableView?(tableView, estimatedHeightForRowAt: indexPath) ?? tableView.estimatedRowHeight
-    }
-
-    open func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        delegate?.tableView?(tableView, willDisplay: cell, forRowAt: indexPath)
-    }
-
-    open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.tableView?(tableView, didSelectRowAt: indexPath)
-    }
-
-    open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return delegate?.tableView?(tableView, viewForHeaderInSection: section)
-    }
-
-    open func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return delegate?.tableView?(tableView, viewForFooterInSection: section)
-    }
-
-    open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return delegate?.tableView?(tableView, heightForHeaderInSection: section) ?? tableView.sectionHeaderHeight
-    }
-
-    open func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return delegate?.tableView?(tableView, heightForFooterInSection: section) ?? tableView.sectionFooterHeight
-    }
-}
+extension TableViewDecorator: UITableViewDelegate {}

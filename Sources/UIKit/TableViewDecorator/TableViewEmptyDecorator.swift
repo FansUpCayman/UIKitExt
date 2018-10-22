@@ -51,36 +51,38 @@ open class TableViewEmptyDecorator: TableViewDecorator {
             super.tableView(tableView, cellForRowAt: indexPath)
     }
 
-    open override func numberOfSections(in tableView: UITableView) -> Int {
-        return isEmpty ? 1 : super.numberOfSections(in: tableView)
+    open func numberOfSections(in tableView: UITableView) -> Int {
+        return isEmpty ? 1 : dataSource?.numberOfSections?(in: tableView) ?? 1
     }
 
     open override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return isEmpty ? 1 : super.tableView(tableView, numberOfRowsInSection: section)
     }
 
-    open override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return isEmpty ? height : super.tableView(tableView, heightForRowAt: indexPath)
+    open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return isEmpty ? height : delegate?.tableView?(tableView, heightForRowAt: indexPath) ?? tableView.rowHeight
     }
 
-    open override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard !isEmpty else { return }
-        super.tableView(tableView, didSelectRowAt: indexPath)
+        delegate?.tableView?(tableView, didSelectRowAt: indexPath)
     }
 
-    open override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return isEmpty ? nil : super.tableView(tableView, viewForHeaderInSection: section)
+    open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return isEmpty ? nil : delegate?.tableView?(tableView, viewForHeaderInSection: section)
     }
 
-    open override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return isEmpty ? nil : super.tableView(tableView, viewForFooterInSection: section)
+    open func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return isEmpty ? nil : delegate?.tableView?(tableView, viewForFooterInSection: section)
     }
 
-    open override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return isEmpty ? 0 : super.tableView(tableView, heightForHeaderInSection: section)
+    open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return isEmpty ? 0 : delegate?.tableView?(tableView, heightForHeaderInSection: section) ??
+            tableView.sectionHeaderHeight
     }
 
-    open override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return isEmpty ? 0 : super.tableView(tableView, heightForFooterInSection: section)
+    open func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return isEmpty ? 0 : delegate?.tableView?(tableView, heightForFooterInSection: section) ??
+            tableView.sectionFooterHeight
     }
 }

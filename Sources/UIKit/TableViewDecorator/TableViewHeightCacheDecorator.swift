@@ -28,16 +28,18 @@ import UIKit
 open class TableViewHeightCacheDecorator: TableViewDecorator {
     private var cachedHeights = [IndexPath: CGFloat]()
 
-    open override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return cachedHeights[indexPath] ?? super.tableView(tableView, estimatedHeightForRowAt: indexPath)
+    open func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return cachedHeights[indexPath] ??
+            delegate?.tableView?(tableView, estimatedHeightForRowAt: indexPath) ??
+            tableView.estimatedRowHeight
     }
 
-    open override func tableView(
+    open func tableView(
         _ tableView: UITableView,
         willDisplay cell: UITableViewCell,
         forRowAt indexPath: IndexPath
     ) {
         cachedHeights[indexPath] = cell.bounds.height
-        super.tableView(tableView, willDisplay: cell, forRowAt: indexPath)
+        delegate?.tableView?(tableView, willDisplay: cell, forRowAt: indexPath)
     }
 }
