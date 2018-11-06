@@ -28,13 +28,18 @@ import UIKit
 @available(iOS 11.0, *)
 open class BaseViewController: UIViewController {
     public struct NavTint {
-        public static let light = NavTint(background: .white, foreground: .black)
-        public static let dark = NavTint(background: .black, foreground: .white)
+        public enum Background {
+            case color(UIColor?)
+            case image(UIImage?, UIImage?)
+        }
 
-        public var background: UIColor?
+        public static let light = NavTint(background: .color(.white), foreground: .black)
+        public static let dark = NavTint(background: .color(.black), foreground: .white)
+
+        public var background: Background
         public var foreground: UIColor?
 
-        public init(background: UIColor?, foreground: UIColor?) {
+        public init(background: Background, foreground: UIColor?) {
             self.background = background
             self.foreground = foreground
         }
@@ -209,13 +214,19 @@ open class BaseViewController: UIViewController {
         bar.tintColor = navTint.foreground
         bar.titleTextAttributes = navTint.foreground.map { [.foregroundColor: $0] }
 
-        if navTint.background != nil {
-            bar.barTintColor = navTint.background
-            bar.setBackgroundImage(nil, for: .default)
-        } else {
-            bar.setBackgroundImage(UIImage(), for: .default)
-            bar.shadowImage = UIImage()
-            bar.isTranslucent = true
+        switch navTint.background {
+        case let .color(color):
+            if color != nil {
+                bar.barTintColor = color
+                bar.setBackgroundImage(nil, for: .default)
+            } else {
+                bar.setBackgroundImage(UIImage(), for: .default)
+                bar.shadowImage = UIImage()
+                bar.isTranslucent = true
+            }
+        case let .image(image, shadow):
+            bar.setBackgroundImage(image, for: .default)
+            bar.shadowImage = shadow
         }
     }
 
