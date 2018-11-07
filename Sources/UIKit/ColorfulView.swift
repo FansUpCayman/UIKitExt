@@ -27,10 +27,6 @@ import UIKit
 
 @IBDesignable
 open class ColorfulView: UIView {
-    public enum Axis: Int {
-        case horizontal, vertical, diagonal, reversedDiagonal
-    }
-
     public enum MaskType {
         case fill, stroke(CGFloat, CAShapeLayerLineCap)
     }
@@ -45,10 +41,10 @@ open class ColorfulView: UIView {
 
     @IBInspectable open var axisValue: Int {
         get { return axis.rawValue }
-        set { axis = Axis(rawValue: newValue) ?? .vertical }
+        set { axis = GradientAxis(rawValue: newValue) ?? .vertical }
     }
 
-    open var axis = Axis.vertical { didSet { updateAxis() } }
+    open var axis = GradientAxis.vertical { didSet { updateAxis() } }
 
     @IBInspectable open var cornerRadius: CGFloat {
         get { return gradientView.layer.cornerRadius }
@@ -132,20 +128,9 @@ open class ColorfulView: UIView {
     }
 
     private func updateAxis() {
-        switch axis {
-        case .horizontal:
-            gradientView.startPoint = CGPoint(x: 0, y: 0.5)
-            gradientView.endPoint = CGPoint(x: 1, y: 0.5)
-        case .vertical:
-            gradientView.startPoint = CGPoint(x: 0.5, y: 0)
-            gradientView.endPoint = CGPoint(x: 0.5, y: 1)
-        case .diagonal:
-            gradientView.startPoint = CGPoint(x: 0, y: 0)
-            gradientView.endPoint = CGPoint(x: 1, y: 1)
-        case .reversedDiagonal:
-            gradientView.startPoint = CGPoint(x: 1, y: 0)
-            gradientView.endPoint = CGPoint(x: 0, y: 1)
-        }
+        let points = axis.points
+        gradientView.startPoint = points.start
+        gradientView.endPoint = points.end
     }
 
     private func updateMaskType() {

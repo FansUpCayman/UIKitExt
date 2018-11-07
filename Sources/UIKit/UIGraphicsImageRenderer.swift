@@ -25,12 +25,39 @@
 
 import UIKit
 
+public enum GradientAxis: Int {
+    case horizontal, vertical, diagonal, reversedDiagonal
+
+    var points: (start: CGPoint, end: CGPoint) {
+        switch self {
+        case .horizontal: return (CGPoint(x: 0, y: 0.5), CGPoint(x: 1, y: 0.5))
+        case .vertical: return (CGPoint(x: 0.5, y: 0), CGPoint(x: 0.5, y: 1))
+        case .diagonal: return (CGPoint(x: 0, y: 0), CGPoint(x: 1, y: 1))
+        case .reversedDiagonal: return (CGPoint(x: 1, y: 0), CGPoint(x: 0, y: 1))
+        }
+    }
+}
+
 @available(iOS 10.0, *)
 extension UIGraphicsImageRenderer {
-    public class func rect(size: CGSize, color: UIColor) -> UIImage {
-        return UIGraphicsImageRenderer(size: size).image { context in
+    public func fill(_ color: UIColor) -> UIImage {
+        return image { context in
             color.setFill()
-            context.fill(CGRect(size))
+            context.fill(context.format.bounds)
+        }
+    }
+
+    public func linearGradient(colors: [UIColor], axis: GradientAxis) -> UIImage {
+        return image { context in
+            let cgColors = colors.map { $0.cgColor }
+            let gradient = CGGradient(colorsSpace: nil, colors: cgColors as CFArray, locations: nil)!
+
+            let size = context.format.bounds.size
+            let points = axis.points
+            let start = CGPoint(x: points.start.x * size.width, y: points.start.y * size.height)
+            let end = CGPoint(x: points.end.x * size.width, y: points.end.y * size.height)
+
+            context.cgContext.drawLinearGradient(gradient, start: start, end: end, options: [])
         }
     }
 }

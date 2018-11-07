@@ -48,7 +48,7 @@ open class ColorfulButton: UIButton {
         set { colorfulView.axisValue = newValue }
     }
 
-    open var axis: ColorfulView.Axis {
+    open var axis: GradientAxis {
         get { return colorfulView.axis }
         set { colorfulView.axis = newValue }
     }
