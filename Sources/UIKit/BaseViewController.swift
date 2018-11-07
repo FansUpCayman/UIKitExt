@@ -33,15 +33,17 @@ open class BaseViewController: UIViewController {
             case image(UIImage?, UIImage?)
         }
 
-        public static let light = NavTint(background: .color(.white), foreground: .black)
-        public static let dark = NavTint(background: .color(.black), foreground: .white)
+        public static let light = NavTint(background: .color(.white), foreground: .black, statusBar: .default)
+        public static let dark = NavTint(background: .color(.black), foreground: .white, statusBar: .lightContent)
 
         public var background: Background
         public var foreground: UIColor?
+        public var statusBar: UIStatusBarStyle
 
-        public init(background: Background, foreground: UIColor?) {
+        public init(background: Background, foreground: UIColor?, statusBar: UIStatusBarStyle) {
             self.background = background
             self.foreground = foreground
+            self.statusBar = statusBar
         }
     }
 
@@ -67,6 +69,20 @@ open class BaseViewController: UIViewController {
     open private(set) var customNavBar: UINavigationBar?
     private var backButton: UIButton?
     private var closeButton: UIButton?
+
+    open override var preferredStatusBarStyle: UIStatusBarStyle { return navTint.statusBar }
+
+    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        commonInit()
+    }
+
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        commonInit()
+    }
+
+    open func commonInit() {}
 
     open override func viewDidLoad() {
         super.viewDidLoad()
@@ -168,6 +184,7 @@ open class BaseViewController: UIViewController {
         updateItemTint(navigationItem.rightBarButtonItem)
         updateButtonTint(backButton)
         updateButtonTint(closeButton)
+        setNeedsStatusBarAppearanceUpdate()
     }
 
     private func updateInteractivePop() {
