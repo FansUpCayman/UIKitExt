@@ -31,6 +31,16 @@ extension Collection {
     }
 }
 
+extension RangeReplaceableCollection {
+    public mutating func prepend(_ newElement: Element) {
+        insert(newElement, at: startIndex)
+    }
+
+    public mutating func prepend<S: Collection>(contentsOf newElements: S) where Element == S.Element {
+        insert(contentsOf: newElements, at: startIndex)
+    }
+}
+
 extension AnyRandomAccessCollection {
     public subscript<BaseIndex: Comparable>(position: BaseIndex) -> Element {
         return self[AnyIndex(position)]
