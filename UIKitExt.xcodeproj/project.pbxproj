@@ -46,6 +46,7 @@
 		C314FD1821787E2B00F1623D /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C314FD1721787E2B00F1623D /* NibLoadable.swift */; };
 		C314FD1A217884E300F1623D /* ColorfulView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C314FD19217884E300F1623D /* ColorfulView.swift */; };
 		C314FD1C2178891700F1623D /* ColorfulButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C314FD1B2178891700F1623D /* ColorfulButton.swift */; };
+		C3DB5F012193EA510053B881 /* CollectionViewTableLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DB5F002193EA510053B881 /* CollectionViewTableLayout.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -90,6 +91,7 @@
 		C314FD1721787E2B00F1623D /* NibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
 		C314FD19217884E300F1623D /* ColorfulView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorfulView.swift; sourceTree = "<group>"; };
 		C314FD1B2178891700F1623D /* ColorfulButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorfulButton.swift; sourceTree = "<group>"; };
+		C3DB5F002193EA510053B881 /* CollectionViewTableLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewTableLayout.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +174,7 @@
 				C314FCB02176C83D00F1623D /* UIView.swift */,
 				C314FCB22176CB1100F1623D /* UIViewController.swift */,
 				C314FCD72177358300F1623D /* BaseViewController.swift */,
+				C3DB5F002193EA510053B881 /* CollectionViewTableLayout.swift */,
 				C314FD1B2178891700F1623D /* ColorfulButton.swift */,
 				C314FD19217884E300F1623D /* ColorfulView.swift */,
 				C314FCBE2176E69400F1623D /* GradientView.swift */,
@@ -309,6 +312,7 @@
 				C314FCA32175EAF500F1623D /* UIColor.swift in Sources */,
 				C314FD1821787E2B00F1623D /* NibLoadable.swift in Sources */,
 				C314FCD22177109000F1623D /* Date.swift in Sources */,
+				C3DB5F012193EA510053B881 /* CollectionViewTableLayout.swift in Sources */,
 				C314FCBF2176E69400F1623D /* GradientView.swift in Sources */,
 				C314FCAF2176C7C700F1623D /* UITableView.swift in Sources */,
 				C314FCAD2175F07C00F1623D /* UIStackView.swift in Sources */,
