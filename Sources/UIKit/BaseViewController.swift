@@ -86,7 +86,12 @@ open class BaseViewController: UIViewController {
 
     open override func viewDidLoad() {
         super.viewDidLoad()
+
         navigationItem.backBarButtonItem = UIBarButtonItem()
+
+        updateShowsCustomNavBar()
+        updateShowsBack()
+        updateShowsClose()
     }
 
     open override func viewWillAppear(_ animated: Bool) {
@@ -119,7 +124,7 @@ open class BaseViewController: UIViewController {
     }
 
     private func updateShowsCustomNavBar() {
-        if showsCustomNavBar && customNavBar == nil {
+        if showsCustomNavBar && customNavBar == nil && isViewLoaded {
             let bar = UINavigationBar()
             bar.translatesAutoresizingMaskIntoConstraints = false
             bar.delegate = self
@@ -193,6 +198,7 @@ open class BaseViewController: UIViewController {
     }
 
     private func updateShowsButton(_ shows: Bool, button: UIButton?, add: () -> UIButton) -> UIButton? {
+        guard isViewLoaded else { return button }
         var button = button
 
         if shows && button == nil {
