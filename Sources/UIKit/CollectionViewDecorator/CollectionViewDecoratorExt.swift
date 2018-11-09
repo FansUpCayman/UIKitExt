@@ -1,5 +1,5 @@
 //
-//  TableViewDecoratorExt.swift
+//  CollectionViewDecoratorExt.swift
 //  UIKitExt
 //
 //  Copyright (c) 2018 Javier Zhang (https://wordlessj.github.io/)
@@ -25,16 +25,16 @@
 
 import UIKit
 
-private let decoratorsKey = AssociatedKey<[TableViewDecorator]>()
+private let decoratorsKey = AssociatedKey<[CollectionViewDecorator]>()
 
-extension UITableView {
-    public private(set) var decorators: [TableViewDecorator] {
+extension UICollectionView {
+    public private(set) var decorators: [CollectionViewDecorator] {
         get { return self[decoratorsKey] ?? [] }
         set { self[decoratorsKey] = newValue }
     }
 
-    public func addDecorator(_ decorator: TableViewDecorator) {
-        decorator.tableView = self
+    public func addDecorator(_ decorator: CollectionViewDecorator) {
+        decorator.collectionView = self
         decorator.dataSource = dataSource
         decorator.delegate = delegate
         dataSource = decorator

@@ -47,6 +47,10 @@
 		C314FD1A217884E300F1623D /* ColorfulView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C314FD19217884E300F1623D /* ColorfulView.swift */; };
 		C314FD1C2178891700F1623D /* ColorfulButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C314FD1B2178891700F1623D /* ColorfulButton.swift */; };
 		C3DB5F012193EA510053B881 /* CollectionViewTableLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DB5F002193EA510053B881 /* CollectionViewTableLayout.swift */; };
+		C3DB5F0421951FFF0053B881 /* CollectionViewDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DB5F0321951FFF0053B881 /* CollectionViewDecorator.swift */; };
+		C3DB5F06219522480053B881 /* CollectionViewDecoratorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DB5F05219522480053B881 /* CollectionViewDecoratorExt.swift */; };
+		C3DB5F08219526FC0053B881 /* CollectionViewDataDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DB5F07219526FC0053B881 /* CollectionViewDataDecorator.swift */; };
+		C3DB5F0A21953BA70053B881 /* TableViewDataDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DB5F0921953BA70053B881 /* TableViewDataDecorator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -92,6 +96,10 @@
 		C314FD19217884E300F1623D /* ColorfulView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorfulView.swift; sourceTree = "<group>"; };
 		C314FD1B2178891700F1623D /* ColorfulButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorfulButton.swift; sourceTree = "<group>"; };
 		C3DB5F002193EA510053B881 /* CollectionViewTableLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewTableLayout.swift; sourceTree = "<group>"; };
+		C3DB5F0321951FFF0053B881 /* CollectionViewDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewDecorator.swift; sourceTree = "<group>"; };
+		C3DB5F05219522480053B881 /* CollectionViewDecoratorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewDecoratorExt.swift; sourceTree = "<group>"; };
+		C3DB5F07219526FC0053B881 /* CollectionViewDataDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewDataDecorator.swift; sourceTree = "<group>"; };
+		C3DB5F0921953BA70053B881 /* TableViewDataDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDataDecorator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,6 +191,7 @@
 				C314FCC02176E77700F1623D /* ShapeView.swift */,
 				C314FCC42176EB0A00F1623D /* TextView.swift */,
 				C314FCC22176E97100F1623D /* VerticalButton.swift */,
+				C3DB5F0221951DD90053B881 /* CollectionViewDecorator */,
 				C314FCC62177067300F1623D /* TableViewDecorator */,
 			);
 			path = UIKit;
@@ -203,10 +212,21 @@
 			children = (
 				C314FCC72177068600F1623D /* TableViewDecorator.swift */,
 				C314FCC9217707EC00F1623D /* TableViewDecoratorExt.swift */,
+				C3DB5F0921953BA70053B881 /* TableViewDataDecorator.swift */,
 				C314FCCB2177091C00F1623D /* TableViewEmptyDecorator.swift */,
 				C314FCCD2177097D00F1623D /* TableViewHeightCacheDecorator.swift */,
 			);
 			path = TableViewDecorator;
+			sourceTree = "<group>";
+		};
+		C3DB5F0221951DD90053B881 /* CollectionViewDecorator */ = {
+			isa = PBXGroup;
+			children = (
+				C3DB5F0321951FFF0053B881 /* CollectionViewDecorator.swift */,
+				C3DB5F05219522480053B881 /* CollectionViewDecoratorExt.swift */,
+				C3DB5F07219526FC0053B881 /* CollectionViewDataDecorator.swift */,
+			);
+			path = CollectionViewDecorator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -290,11 +310,14 @@
 			files = (
 				C314FCC12176E77700F1623D /* ShapeView.swift in Sources */,
 				C314FCCA217707EC00F1623D /* TableViewDecoratorExt.swift in Sources */,
+				C3DB5F0421951FFF0053B881 /* CollectionViewDecorator.swift in Sources */,
+				C3DB5F0A21953BA70053B881 /* TableViewDataDecorator.swift in Sources */,
 				C314FCAB2175EE4E00F1623D /* UIScrollView.swift in Sources */,
 				C314FCA12175E9F500F1623D /* UICollectionView.swift in Sources */,
 				C314FC932175E83000F1623D /* Numbers.swift in Sources */,
 				C314FCD82177358300F1623D /* BaseViewController.swift in Sources */,
 				C314FCB32176CB1100F1623D /* UIViewController.swift in Sources */,
+				C3DB5F08219526FC0053B881 /* CollectionViewDataDecorator.swift in Sources */,
 				C314FCA52175EBEA00F1623D /* UIEdgeInsets.swift in Sources */,
 				C314FC9D2175E94500F1623D /* CALayer.swift in Sources */,
 				C314FC982175E83000F1623D /* Calendar.swift in Sources */,
@@ -322,6 +345,7 @@
 				C314FCCE2177097D00F1623D /* TableViewHeightCacheDecorator.swift in Sources */,
 				C314FC942175E83000F1623D /* Dispatch.swift in Sources */,
 				C314FC952175E83000F1623D /* UserDefaults.swift in Sources */,
+				C3DB5F06219522480053B881 /* CollectionViewDecoratorExt.swift in Sources */,
 				C314FCC52176EB0A00F1623D /* TextView.swift in Sources */,
 				C314FCC82177068600F1623D /* TableViewDecorator.swift in Sources */,
 				C314FD1C2178891700F1623D /* ColorfulButton.swift in Sources */,

@@ -1,5 +1,5 @@
 //
-//  TableViewDecorator.swift
+//  CollectionViewDecorator.swift
 //  UIKitExt
 //
 //  Copyright (c) 2018 Javier Zhang (https://wordlessj.github.io/)
@@ -25,10 +25,10 @@
 
 import UIKit
 
-open class TableViewDecorator: NSObject {
-    weak var tableView: UITableView?
-    open weak var dataSource: UITableViewDataSource?
-    open weak var delegate: UITableViewDelegate?
+open class CollectionViewDecorator: NSObject {
+    weak var collectionView: UICollectionView?
+    open weak var dataSource: UICollectionViewDataSource?
+    open weak var delegate: UICollectionViewDelegate?
 
     open override func responds(to aSelector: Selector!) -> Bool {
         return super.responds(to: aSelector) ||
@@ -47,14 +47,17 @@ open class TableViewDecorator: NSObject {
     }
 }
 
-extension TableViewDecorator: UITableViewDataSource {
-    open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return dataSource?.tableView(tableView, cellForRowAt: indexPath) ?? UITableViewCell()
+extension CollectionViewDecorator: UICollectionViewDataSource {
+    open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return dataSource?.collectionView(collectionView, numberOfItemsInSection: section) ?? 0
     }
 
-    open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataSource?.tableView(tableView, numberOfRowsInSection: section) ?? 0
+    open func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        return dataSource?.collectionView(collectionView, cellForItemAt: indexPath) ?? UICollectionViewCell()
     }
 }
 
-extension TableViewDecorator: UITableViewDelegate {}
+extension CollectionViewDecorator: UICollectionViewDelegate {}
