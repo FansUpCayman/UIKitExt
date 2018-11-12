@@ -25,19 +25,27 @@
 
 import UIKit
 
-open class TableViewDataDecorator<S>: TableViewDecorator
+open class TableViewDataDecorator<S>: TableViewDecorator, DataDecorator
     where S: RandomAccessCollection,
     S.Index == Int
 {
-    public typealias CellForRow = (UITableView, IndexPath, S.Element) -> UITableViewCell
+    public typealias View = UITableView
+    public typealias Cell = UITableViewCell
+    public typealias Item = S.Element
 
     open var data: S { didSet { tableView?.reloadData() } }
 
-    private let cellForRow: CellForRow
+    override weak var tableView: UITableView? {
+        didSet { added?(tableView) }
+    }
 
-    public init(_ data: S, cellForRow: @escaping CellForRow) {
+    private let cellFor: CellFor
+    private let added: ((UITableView?) -> ())?
+
+    public required init(_ data: S, cellFor: @escaping CellFor, added: ((UITableView?) -> ())? = nil) {
         self.data = data
-        self.cellForRow = cellForRow
+        self.cellFor = cellFor
+        self.added = added
     }
 
     open override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -45,25 +53,33 @@ open class TableViewDataDecorator<S>: TableViewDecorator
     }
 
     open override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return cellForRow(tableView, indexPath, data[indexPath.row])
+        return cellFor(tableView, indexPath, data[indexPath.row])
     }
 }
 
-open class TableViewSectionDataDecorator<S>: TableViewDecorator
+open class TableViewSectionDataDecorator<S>: TableViewDecorator, DataDecorator
     where S: RandomAccessCollection,
     S.Index == Int,
     S.Element: RandomAccessCollection,
     S.Element.Index == Int
 {
-    public typealias CellForRow = (UITableView, IndexPath, S.Element.Element) -> UITableViewCell
+    public typealias View = UITableView
+    public typealias Cell = UITableViewCell
+    public typealias Item = S.Element.Element
 
     open var data: S { didSet { tableView?.reloadData() } }
 
-    private let cellForRow: CellForRow
+    override weak var tableView: UITableView? {
+        didSet { added?(tableView) }
+    }
 
-    public init(_ data: S, cellForRow: @escaping CellForRow) {
+    private let cellFor: CellFor
+    private let added: ((UITableView?) -> ())?
+
+    public required init(_ data: S, cellFor: @escaping CellFor, added: ((UITableView?) -> ())? = nil) {
         self.data = data
-        self.cellForRow = cellForRow
+        self.cellFor = cellFor
+        self.added = added
     }
 
     open func numberOfSections(in tableView: UITableView) -> Int {
@@ -75,44 +91,6 @@ open class TableViewSectionDataDecorator<S>: TableViewDecorator
     }
 
     open override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return cellForRow(tableView, indexPath, data[indexPath.section][indexPath.item])
-    }
-}
-
-open class TableViewDataCellDecorator<S, Cell>: TableViewDataDecorator<S>
-    where S: RandomAccessCollection,
-    S.Index == Int,
-    Cell: UITableViewCell
-{
-    override weak var tableView: UITableView? {
-        didSet { tableView?.register(Cell.self) }
-    }
-
-    public convenience init(_ data: S, config: @escaping (Cell, IndexPath, S.Element) -> ()) {
-        self.init(data, cellForRow: { tableView, indexPath, element in
-            let cell = tableView.dequeue(Cell.self, for: indexPath)
-            config(cell, indexPath, element)
-            return cell
-        })
-    }
-}
-
-open class TableViewSectionDataCellDecorator<S, Cell>: TableViewSectionDataDecorator<S>
-    where S: RandomAccessCollection,
-    S.Index == Int,
-    S.Element: RandomAccessCollection,
-    S.Element.Index == Int,
-    Cell: UITableViewCell
-{
-    override weak var tableView: UITableView? {
-        didSet { tableView?.register(Cell.self) }
-    }
-
-    public convenience init(_ data: S, config: @escaping (Cell, IndexPath, S.Element.Element) -> ()) {
-        self.init(data, cellForRow: { tableView, indexPath, element in
-            let cell = tableView.dequeue(Cell.self, for: indexPath)
-            config(cell, indexPath, element)
-            return cell
-        })
+        return cellFor(tableView, indexPath, data[indexPath.section][indexPath.item])
     }
 }

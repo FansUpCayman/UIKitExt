@@ -25,19 +25,50 @@
 
 import UIKit
 
-open class CollectionViewDataDecorator<S>: CollectionViewDecorator
+public protocol DataDecorator: class {
+    associatedtype View: CellContainer
+    associatedtype Cell
+    associatedtype S
+    associatedtype Item
+    typealias CellFor = (View, IndexPath, Item) -> Cell
+
+    var data: S { get set }
+    init(_ data: S, cellFor: @escaping CellFor, added: ((View?) -> ())?)
+}
+
+extension DataDecorator {
+    public init<C: AnyObject>(_ data: S, config: @escaping (C, IndexPath, Item) -> ()) {
+        self.init(data, cellFor: { collectionView, indexPath, element in
+            let cell = collectionView.dequeue(C.self, for: indexPath)
+            config(cell, indexPath, element)
+            return cell as! Cell
+        }, added: { collectionView in
+            collectionView?.register(C.self)
+        })
+    }
+}
+
+open class CollectionViewDataDecorator<S>: CollectionViewDecorator, DataDecorator
     where S: RandomAccessCollection,
     S.Index == Int
 {
-    public typealias CellForItem = (UICollectionView, IndexPath, S.Element) -> UICollectionViewCell
+    public typealias View = UICollectionView
+    public typealias Cell = UICollectionViewCell
+    public typealias Item = S.Element
 
     open var data: S { didSet { collectionView?.reloadData() } }
 
-    private let cellForItem: CellForItem
+    override weak var collectionView: UICollectionView? {
+        didSet { added?(collectionView) }
+    }
 
-    public init(_ data: S, cellForItem: @escaping CellForItem) {
+    private let cellFor: CellFor
+    private let added: ((UICollectionView?) -> ())?
+
+    public required init(_ data: S, cellFor: @escaping CellFor, added: ((UICollectionView?) -> ())? = nil) {
         self.data = data
-        self.cellForItem = cellForItem
+        self.cellFor = cellFor
+        self.added = added
     }
 
     open override func collectionView(
@@ -51,25 +82,33 @@ open class CollectionViewDataDecorator<S>: CollectionViewDecorator
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        return cellForItem(collectionView, indexPath, data[indexPath.item])
+        return cellFor(collectionView, indexPath, data[indexPath.item])
     }
 }
 
-open class CollectionViewSectionDataDecorator<S>: CollectionViewDecorator
+open class CollectionViewSectionDataDecorator<S>: CollectionViewDecorator, DataDecorator
     where S: RandomAccessCollection,
     S.Index == Int,
     S.Element: RandomAccessCollection,
     S.Element.Index == Int
 {
-    public typealias CellForItem = (UICollectionView, IndexPath, S.Element.Element) -> UICollectionViewCell
+    public typealias View = UICollectionView
+    public typealias Cell = UICollectionViewCell
+    public typealias Item = S.Element.Element
 
     open var data: S { didSet { collectionView?.reloadData() } }
 
-    private let cellForItem: CellForItem
+    override weak var collectionView: UICollectionView? {
+        didSet { added?(collectionView) }
+    }
 
-    public init(_ data: S, cellForItem: @escaping CellForItem) {
+    private let cellFor: CellFor
+    private let added: ((UICollectionView?) -> ())?
+
+    public required init(_ data: S, cellFor: @escaping CellFor, added: ((UICollectionView?) -> ())? = nil) {
         self.data = data
-        self.cellForItem = cellForItem
+        self.cellFor = cellFor
+        self.added = added
     }
 
     open func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -87,44 +126,6 @@ open class CollectionViewSectionDataDecorator<S>: CollectionViewDecorator
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        return cellForItem(collectionView, indexPath, data[indexPath.section][indexPath.item])
-    }
-}
-
-open class CollectionViewDataCellDecorator<S, Cell>: CollectionViewDataDecorator<S>
-    where S: RandomAccessCollection,
-    S.Index == Int,
-    Cell: UICollectionViewCell
-{
-    override weak var collectionView: UICollectionView? {
-        didSet { collectionView?.register(Cell.self) }
-    }
-
-    public convenience init(_ data: S, config: @escaping (Cell, IndexPath, S.Element) -> ()) {
-        self.init(data, cellForItem: { collectionView, indexPath, element in
-            let cell = collectionView.dequeue(Cell.self, for: indexPath)
-            config(cell, indexPath, element)
-            return cell
-        })
-    }
-}
-
-open class CollectionViewSectionDataCellDecorator<S, Cell>: CollectionViewSectionDataDecorator<S>
-    where S: RandomAccessCollection,
-    S.Index == Int,
-    S.Element: RandomAccessCollection,
-    S.Element.Index == Int,
-    Cell: UICollectionViewCell
-{
-    override weak var collectionView: UICollectionView? {
-        didSet { collectionView?.register(Cell.self) }
-    }
-
-    public convenience init(_ data: S, config: @escaping (Cell, IndexPath, S.Element.Element) -> ()) {
-        self.init(data, cellForItem: { collectionView, indexPath, element in
-            let cell = collectionView.dequeue(Cell.self, for: indexPath)
-            config(cell, indexPath, element)
-            return cell
-        })
+        return cellFor(collectionView, indexPath, data[indexPath.section][indexPath.item])
     }
 }

@@ -25,7 +25,12 @@
 
 import UIKit
 
-extension UICollectionView {
+public protocol CellContainer {
+    func register<Cell: AnyObject>(_ type: Cell.Type)
+    func dequeue<Cell: AnyObject>(_ type: Cell.Type, for indexPath: IndexPath) -> Cell
+}
+
+extension UICollectionView: CellContainer {
     public enum ElementKind {
         case sectionHeader
         case sectionFooter
@@ -40,7 +45,7 @@ extension UICollectionView {
         }
     }
 
-    public func register<Cell: UICollectionViewCell>(_ type: Cell.Type) {
+    public func register<Cell: AnyObject>(_ type: Cell.Type) {
         register(type, forCellWithReuseIdentifier: String(describing: type))
     }
 
@@ -48,7 +53,7 @@ extension UICollectionView {
         register(type, forSupplementaryViewOfKind: kind.value, withReuseIdentifier: String(describing: type))
     }
 
-    public func dequeue<Cell: UICollectionViewCell>(_ type: Cell.Type, for indexPath: IndexPath) -> Cell {
+    public func dequeue<Cell: AnyObject>(_ type: Cell.Type, for indexPath: IndexPath) -> Cell {
         return dequeueReusableCell(withReuseIdentifier: String(describing: type), for: indexPath) as! Cell
     }
 

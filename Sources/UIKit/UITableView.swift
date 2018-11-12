@@ -25,8 +25,8 @@
 
 import UIKit
 
-extension UITableView {
-    public func register<Cell: UITableViewCell>(_ type: Cell.Type) {
+extension UITableView: CellContainer {
+    public func register<Cell: AnyObject>(_ type: Cell.Type) {
         register(type, forCellReuseIdentifier: String(describing: type))
     }
 
@@ -34,7 +34,7 @@ extension UITableView {
         register(type, forHeaderFooterViewReuseIdentifier: String(describing: type))
     }
 
-    public func dequeue<Cell: UITableViewCell>(_ type: Cell.Type, for indexPath: IndexPath) -> Cell {
+    public func dequeue<Cell: AnyObject>(_ type: Cell.Type, for indexPath: IndexPath) -> Cell {
         return dequeueReusableCell(withIdentifier: String(describing: type), for: indexPath) as! Cell
     }
 
