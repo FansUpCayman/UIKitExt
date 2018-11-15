@@ -107,6 +107,11 @@ open class BaseViewController: UIViewController {
         updateInteractivePop()
     }
 
+    open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        updateNavTint()
+    }
+
     open func hide(animated: Bool = false) {
         if let nav = navigationController, nav.viewControllers.count > 1 {
             nav.popViewController(animated: animated)
