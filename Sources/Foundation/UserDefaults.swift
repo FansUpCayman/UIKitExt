@@ -26,23 +26,22 @@
 import Foundation
 
 extension UserDefaults {
-    public func optionalBool(forKey defaultName: String) -> Bool? {
-        return optionalValue(forKey: defaultName, value: bool)
+    public struct Key<Value> {
+        public var name: String
+
+        public init(_ name: String) {
+            self.name = name
+        }
     }
 
-    public func optionalInteger(forKey defaultName: String) -> Int? {
-        return optionalValue(forKey: defaultName, value: integer)
-    }
-
-    public func optionalFloat(forKey defaultName: String) -> Float? {
-        return optionalValue(forKey: defaultName, value: float)
-    }
-
-    public func optionalDouble(forKey defaultName: String) -> Double? {
-        return optionalValue(forKey: defaultName, value: double)
-    }
-
-    private func optionalValue<Value>(forKey defaultName: String, value: (String) -> Value) -> Value? {
-        return object(forKey: defaultName).map { _ in value(defaultName) }
+    public subscript<Value>(key: Key<Value>) -> Value? {
+        get { return object(forKey: key.name) as? Value }
+        set {
+            if let value = newValue {
+                set(value, forKey: key.name)
+            } else {
+                removeObject(forKey: key.name)
+            }
+        }
     }
 }
