@@ -84,15 +84,15 @@ extension Int64 {
 private let doubleFormatter: NumberFormatter = {
     let formatter = NumberFormatter()
     formatter.minimumIntegerDigits = 1
-    formatter.minimumFractionDigits = 2
-    formatter.maximumFractionDigits = 2
     return formatter
 }()
 
 private let durationFormatter = DateComponentsFormatter()
 
 extension Double {
-    public func formatted() -> String {
+    public func formatted(fraction: Int = 2) -> String {
+        doubleFormatter.minimumFractionDigits = fraction
+        doubleFormatter.maximumFractionDigits = fraction
         return doubleFormatter.string(from: NSNumber(value: self)) ?? ""
     }
 
