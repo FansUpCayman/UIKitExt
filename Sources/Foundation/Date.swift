@@ -26,7 +26,13 @@
 import Foundation
 
 extension Date {
+    public var timeInterval: TimeInterval { return timeIntervalSince1970 }
+
     public static func - (lhs: Date, rhs: Date) -> TimeInterval {
         return lhs.timeIntervalSince(rhs)
+    }
+
+    public init(_ timeInterval: TimeInterval) {
+        self.init(timeIntervalSince1970: timeInterval)
     }
 }

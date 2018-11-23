@@ -25,6 +25,18 @@
 
 import Foundation
 
+extension Comparable {
+    public func clamped(to range: ClosedRange<Self>) -> Self {
+        if self > range.upperBound {
+            return range.upperBound
+        } else if self < range.lowerBound {
+            return range.lowerBound
+        } else {
+            return self
+        }
+    }
+}
+
 extension ExpressibleByIntegerLiteral {
     public init(_ value: Bool) {
         self = value ? 1 : 0
@@ -35,9 +47,23 @@ extension Numeric {
     public var isSingular: Bool { return self == 1 }
 }
 
+extension BinaryInteger {
+    public func roundDivided(by other: Self, rule: FloatingPointRoundingRule = .toNearestOrAwayFromZero) -> Self {
+        return Self((Double(self) / Double(other)).rounded(rule))
+    }
+
+    public func clamped(interval: Self, base: Self = 0) -> Self {
+        return (self - base).roundDivided(by: interval) * interval + base
+    }
+}
+
 extension FloatingPoint {
     public func divided(by other: Self, default defaultValue: Self = 0) -> Self {
         return other != 0 ? self / other : defaultValue
+    }
+
+    public func clamped(interval: Self, base: Self = 0) -> Self {
+        return ((self - base) / interval).rounded() * interval + base
     }
 }
 
@@ -69,15 +95,9 @@ extension Double: DoubleConvertible {
 
 private let intFormatter = NumberFormatter()
 
-extension Int {
+extension BinaryInteger {
     public func formatted() -> String {
-        return intFormatter.string(from: NSNumber(value: self)) ?? ""
-    }
-}
-
-extension Int64 {
-    public func formatted() -> String {
-        return intFormatter.string(from: NSNumber(value: self)) ?? ""
+        return intFormatter.string(from: NSNumber(value: Int(self))) ?? ""
     }
 }
 
@@ -89,11 +109,11 @@ private let doubleFormatter: NumberFormatter = {
 
 private let durationFormatter = DateComponentsFormatter()
 
-extension Double {
+extension BinaryFloatingPoint {
     public func formatted(fraction: Int = 2) -> String {
         doubleFormatter.minimumFractionDigits = fraction
         doubleFormatter.maximumFractionDigits = fraction
-        return doubleFormatter.string(from: NSNumber(value: self)) ?? ""
+        return doubleFormatter.string(from: NSNumber(value: Double(self))) ?? ""
     }
 
     public func formattedDuration(
@@ -106,6 +126,6 @@ extension Double {
         durationFormatter.maximumUnitCount = maxUnitCount
         durationFormatter.zeroFormattingBehavior = zeroPad ? .pad : .default
         durationFormatter.unitsStyle = unitsStyle
-        return durationFormatter.string(from: self) ?? ""
+        return durationFormatter.string(from: Double(self)) ?? ""
     }
 }
