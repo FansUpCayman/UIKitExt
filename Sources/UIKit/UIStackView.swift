@@ -33,14 +33,18 @@ extension UIStackView {
         }
     }
 
-    public func setSpaceEvenlySubviews(_ subviews: [UIView]) {
+    public func setArrangedSubviews(_ views: [UIView]) {
         removeAllArrangedSubviews()
-        addArrangedSubview(UIView())
 
-        for view in subviews {
+        for view in views {
             addArrangedSubview(view)
         }
+    }
 
-        addArrangedSubview(UIView())
+    public func setSpaceEvenlySubviews(_ views: [UIView]) {
+        var views = views
+        views.prepend(UIView())
+        views.append(UIView())
+        setArrangedSubviews(views)
     }
 }
