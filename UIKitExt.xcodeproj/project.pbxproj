@@ -46,6 +46,7 @@
 		C314FD1821787E2B00F1623D /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C314FD1721787E2B00F1623D /* NibLoadable.swift */; };
 		C314FD1A217884E300F1623D /* ColorfulView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C314FD19217884E300F1623D /* ColorfulView.swift */; };
 		C314FD1C2178891700F1623D /* ColorfulButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C314FD1B2178891700F1623D /* ColorfulButton.swift */; };
+		C399EF4B21BF899400F5DBB5 /* CollectionViewPageLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C399EF4A21BF899400F5DBB5 /* CollectionViewPageLayout.swift */; };
 		C3DB5F012193EA510053B881 /* CollectionViewTableLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DB5F002193EA510053B881 /* CollectionViewTableLayout.swift */; };
 		C3DB5F0421951FFF0053B881 /* CollectionViewDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DB5F0321951FFF0053B881 /* CollectionViewDecorator.swift */; };
 		C3DB5F06219522480053B881 /* CollectionViewDecoratorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DB5F05219522480053B881 /* CollectionViewDecoratorExt.swift */; };
@@ -95,6 +96,7 @@
 		C314FD1721787E2B00F1623D /* NibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
 		C314FD19217884E300F1623D /* ColorfulView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorfulView.swift; sourceTree = "<group>"; };
 		C314FD1B2178891700F1623D /* ColorfulButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorfulButton.swift; sourceTree = "<group>"; };
+		C399EF4A21BF899400F5DBB5 /* CollectionViewPageLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewPageLayout.swift; sourceTree = "<group>"; };
 		C3DB5F002193EA510053B881 /* CollectionViewTableLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewTableLayout.swift; sourceTree = "<group>"; };
 		C3DB5F0321951FFF0053B881 /* CollectionViewDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewDecorator.swift; sourceTree = "<group>"; };
 		C3DB5F05219522480053B881 /* CollectionViewDecoratorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewDecoratorExt.swift; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 				C314FCB02176C83D00F1623D /* UIView.swift */,
 				C314FCB22176CB1100F1623D /* UIViewController.swift */,
 				C314FCD72177358300F1623D /* BaseViewController.swift */,
+				C399EF4A21BF899400F5DBB5 /* CollectionViewPageLayout.swift */,
 				C3DB5F002193EA510053B881 /* CollectionViewTableLayout.swift */,
 				C314FD1B2178891700F1623D /* ColorfulButton.swift */,
 				C314FD19217884E300F1623D /* ColorfulView.swift */,
@@ -323,6 +326,7 @@
 				C314FC982175E83000F1623D /* Calendar.swift in Sources */,
 				C314FCD021770AAA00F1623D /* NavigationController.swift in Sources */,
 				C314FD1A217884E300F1623D /* ColorfulView.swift in Sources */,
+				C399EF4B21BF899400F5DBB5 /* CollectionViewPageLayout.swift in Sources */,
 				C314FCA92175ECBD00F1623D /* UIScreen.swift in Sources */,
 				C314FCD42177151C00F1623D /* CGGeometry.swift in Sources */,
 				C314FC972175E83000F1623D /* Collection.swift in Sources */,
