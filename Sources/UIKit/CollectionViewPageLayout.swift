@@ -40,7 +40,7 @@ open class CollectionViewPageLayout: UICollectionViewFlowLayout {
         return Int((offset / pageSize).rounded())
     }
 
-    private var pageSize: CGFloat {
+    open var pageSize: CGFloat {
         switch scrollDirection {
         case .horizontal: return itemSize.width + minimumLineSpacing
         case .vertical: return itemSize.height + minimumLineSpacing
