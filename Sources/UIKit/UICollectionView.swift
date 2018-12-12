@@ -25,6 +25,19 @@
 
 import UIKit
 
+extension UICollectionView {
+    public func safeScrollToItem(
+        at indexPath: IndexPath,
+        at scrollPosition: ScrollPosition,
+        animated: Bool = false
+    ) {
+        guard indexPath.section < numberOfSections,
+            indexPath.item < numberOfItems(inSection: indexPath.section)
+            else { return }
+        scrollToItem(at: indexPath, at: scrollPosition, animated: animated)
+    }
+}
+
 public protocol CellContainer {
     func register<Cell: AnyObject>(_ type: Cell.Type)
     func dequeue<Cell: AnyObject>(_ type: Cell.Type, for indexPath: IndexPath) -> Cell
