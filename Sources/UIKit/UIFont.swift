@@ -25,6 +25,28 @@
 
 import UIKit
 
+@available(iOS 8.2, *)
+private let fontWeights: [UIFont.Weight] = [
+    .ultraLight,
+    .thin,
+    .light,
+    .regular,
+    .medium,
+    .semibold,
+    .bold,
+    .heavy,
+    .black,
+]
+
+@available(iOS 8.2, *)
+extension UIFont.Weight {
+    public var index: Int { return fontWeights.firstIndex(of: self) ?? 3 }
+
+    public init(index: Int) {
+        self = fontWeights[safe: index] ?? .regular
+    }
+}
+
 extension UIFont {
     public func with(_ traits: UIFontDescriptor.SymbolicTraits) -> UIFont {
         let descriptor = fontDescriptor.withSymbolicTraits(traits)!
