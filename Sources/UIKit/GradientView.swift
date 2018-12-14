@@ -36,14 +36,14 @@ open class GradientView: UIView {
         set { gradientLayer.locations = newValue?.map { NSNumber(value: Double($0)) } }
     }
 
-    open var endPoint: CGPoint {
-        get { return gradientLayer.endPoint }
-        set { gradientLayer.endPoint = newValue }
-    }
+    open var endPoint = CGPoint(x: 0.5, y: 1) { didSet { updateEndPoint() } }
 
     open var startPoint: CGPoint {
         get { return gradientLayer.startPoint }
-        set { gradientLayer.startPoint = newValue }
+        set {
+            gradientLayer.startPoint = newValue
+            updateEndPoint()
+        }
     }
 
     open var type: CAGradientLayerType {
@@ -54,4 +54,26 @@ open class GradientView: UIView {
     open override class var layerClass: AnyClass { return CAGradientLayer.self }
 
     private var gradientLayer: CAGradientLayer { return layer as! CAGradientLayer }
+
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+        updateEndPoint()
+    }
+
+    // https://stackoverflow.com/questions/38821631/cagradientlayer-diagonal-gradient
+    private func updateEndPoint() {
+        let width = bounds.width
+        let height = bounds.height
+        let dx = endPoint.x - startPoint.x
+        let dy = endPoint.y - startPoint.y
+
+        if width == 0 || height == 0 || width == height || dx == 0 || dy == 0 {
+            gradientLayer.endPoint = endPoint
+        } else {
+            let ux = dx * width / height
+            let uy = dy * height / width
+            let coef = (dx * ux + dy * uy) / (ux * ux + uy * uy)
+            gradientLayer.endPoint = CGPoint(x: startPoint.x + coef * ux, y: startPoint.y + coef * uy)
+        }
+    }
 }
