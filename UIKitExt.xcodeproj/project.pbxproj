@@ -33,7 +33,7 @@
 		C314FCBD2176D6E900F1623D /* DisplayLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = C314FCBC2176D6E900F1623D /* DisplayLink.swift */; };
 		C314FCBF2176E69400F1623D /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C314FCBE2176E69400F1623D /* GradientView.swift */; };
 		C314FCC12176E77700F1623D /* ShapeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C314FCC02176E77700F1623D /* ShapeView.swift */; };
-		C314FCC32176E97100F1623D /* VerticalButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C314FCC22176E97100F1623D /* VerticalButton.swift */; };
+		C314FCC32176E97100F1623D /* DirectionalButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C314FCC22176E97100F1623D /* DirectionalButton.swift */; };
 		C314FCC52176EB0A00F1623D /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C314FCC42176EB0A00F1623D /* TextView.swift */; };
 		C314FCC82177068600F1623D /* TableViewDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C314FCC72177068600F1623D /* TableViewDecorator.swift */; };
 		C314FCCA217707EC00F1623D /* TableViewDecoratorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C314FCC9217707EC00F1623D /* TableViewDecoratorExt.swift */; };
@@ -83,7 +83,7 @@
 		C314FCBC2176D6E900F1623D /* DisplayLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayLink.swift; sourceTree = "<group>"; };
 		C314FCBE2176E69400F1623D /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		C314FCC02176E77700F1623D /* ShapeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeView.swift; sourceTree = "<group>"; };
-		C314FCC22176E97100F1623D /* VerticalButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalButton.swift; sourceTree = "<group>"; };
+		C314FCC22176E97100F1623D /* DirectionalButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionalButton.swift; sourceTree = "<group>"; };
 		C314FCC42176EB0A00F1623D /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		C314FCC72177068600F1623D /* TableViewDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDecorator.swift; sourceTree = "<group>"; };
 		C314FCC9217707EC00F1623D /* TableViewDecoratorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDecoratorExt.swift; sourceTree = "<group>"; };
@@ -188,12 +188,12 @@
 				C3DB5F002193EA510053B881 /* CollectionViewTableLayout.swift */,
 				C314FD1B2178891700F1623D /* ColorfulButton.swift */,
 				C314FD19217884E300F1623D /* ColorfulView.swift */,
+				C314FCC22176E97100F1623D /* DirectionalButton.swift */,
 				C314FCBE2176E69400F1623D /* GradientView.swift */,
 				C314FCCF21770AAA00F1623D /* NavigationController.swift */,
 				C314FD1721787E2B00F1623D /* NibLoadable.swift */,
 				C314FCC02176E77700F1623D /* ShapeView.swift */,
 				C314FCC42176EB0A00F1623D /* TextView.swift */,
-				C314FCC22176E97100F1623D /* VerticalButton.swift */,
 				C3DB5F0221951DD90053B881 /* CollectionViewDecorator */,
 				C314FCC62177067300F1623D /* TableViewDecorator */,
 			);
@@ -331,7 +331,7 @@
 				C314FCD42177151C00F1623D /* CGGeometry.swift in Sources */,
 				C314FC972175E83000F1623D /* Collection.swift in Sources */,
 				C314FCBD2176D6E900F1623D /* DisplayLink.swift in Sources */,
-				C314FCC32176E97100F1623D /* VerticalButton.swift in Sources */,
+				C314FCC32176E97100F1623D /* DirectionalButton.swift in Sources */,
 				C314FCCC2177091C00F1623D /* TableViewEmptyDecorator.swift in Sources */,
 				C314FCB72176CFB900F1623D /* UIGraphicsImageRenderer.swift in Sources */,
 				C314FC9B2175E8D500F1623D /* NSObject.swift in Sources */,
