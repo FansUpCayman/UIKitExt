@@ -34,8 +34,9 @@ private let formatter: MeasurementFormatter = {
 
 @available(iOS 10.0, *)
 extension Measurement {
-    public func formatted(unitStyle: Formatter.UnitStyle = .medium) -> String {
+    public func formatted(fraction: Int = 2, unitStyle: Formatter.UnitStyle = .medium) -> String {
         formatter.unitStyle = unitStyle
+        formatter.numberFormatter.maximumFractionDigits = fraction
         return formatter.string(from: self)
     }
 }
