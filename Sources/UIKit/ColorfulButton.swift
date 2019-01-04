@@ -53,34 +53,42 @@ open class ColorfulButton: UIButton {
         set { colorfulView.axis = newValue }
     }
 
-    @IBInspectable open var cornerRadius = CGFloat.greatestFiniteMagnitude { didSet { updateCornerRadius() } }
+    @IBInspectable open override var cornerRadius: CGFloat {
+        get { return _cornerRadius }
+        set {
+            _cornerRadius = newValue
+            updateCornerRadius()
+        }
+    }
 
-    @IBInspectable open var borderWidth: CGFloat {
+    private var _cornerRadius = CGFloat.greatestFiniteMagnitude
+
+    @IBInspectable open override var borderWidth: CGFloat {
         get { return colorfulView.borderWidth }
         set { colorfulView.borderWidth = newValue }
     }
 
-    @IBInspectable open var borderColor: UIColor? {
+    @IBInspectable open override var borderColor: UIColor? {
         get { return colorfulView.borderColor }
         set { colorfulView.borderColor = newValue }
     }
 
-    @IBInspectable open var shadowOpacity: CGFloat {
+    @IBInspectable open override var shadowOpacity: CGFloat {
         get { return colorfulView.shadowOpacity }
         set { colorfulView.shadowOpacity = newValue }
     }
 
-    @IBInspectable open var shadowRadius: CGFloat {
+    @IBInspectable open override var shadowRadius: CGFloat {
         get { return colorfulView.shadowRadius }
         set { colorfulView.shadowRadius = newValue }
     }
 
-    @IBInspectable open var shadowOffset: CGSize {
+    @IBInspectable open override var shadowOffset: CGSize {
         get { return colorfulView.shadowOffset }
         set { colorfulView.shadowOffset = newValue }
     }
 
-    @IBInspectable open var shadowColor: UIColor? {
+    @IBInspectable open override var shadowColor: UIColor? {
         get { return colorfulView.shadowColor }
         set { colorfulView.shadowColor = newValue }
     }

@@ -46,51 +46,45 @@ open class ColorfulView: UIView {
 
     open var axis = GradientAxis.vertical { didSet { updateAxis() } }
 
-    @IBInspectable open var cornerRadius: CGFloat {
-        get { return gradientView.layer.cornerRadius }
-        set { gradientView.layer.cornerRadius = newValue }
+    @IBInspectable open override var cornerRadius: CGFloat {
+        get { return gradientView.cornerRadius }
+        set { gradientView.cornerRadius = newValue }
     }
 
     @available(iOS 11.0, *)
-    @IBInspectable open var maskedCornersValue: UInt {
-        get { return maskedCorners.rawValue }
-        set { maskedCorners = CACornerMask(rawValue: newValue) }
+    @IBInspectable open override var maskedCornersValue: UInt {
+        get { return gradientView.maskedCornersValue }
+        set { gradientView.maskedCornersValue = newValue }
     }
 
-    @available(iOS 11.0, *)
-    open var maskedCorners: CACornerMask {
-        get { return gradientView.layer.maskedCorners }
-        set { gradientView.layer.maskedCorners = newValue }
+    @IBInspectable open override var borderWidth: CGFloat {
+        get { return gradientView.borderWidth }
+        set { gradientView.borderWidth = newValue }
     }
 
-    @IBInspectable open var borderWidth: CGFloat {
-        get { return gradientView.layer.borderWidth }
-        set { gradientView.layer.borderWidth = newValue }
+    @IBInspectable open override var borderColor: UIColor? {
+        get { return gradientView.borderColor }
+        set { gradientView.borderColor = newValue }
     }
 
-    @IBInspectable open var borderColor: UIColor? {
-        get { return gradientView.layer.borderColor.map { UIColor(cgColor: $0) } }
-        set { gradientView.layer.borderColor = newValue?.cgColor }
+    @IBInspectable open override var shadowOpacity: CGFloat {
+        get { return gradientView.shadowOpacity }
+        set { gradientView.shadowOpacity = newValue }
     }
 
-    @IBInspectable open var shadowOpacity: CGFloat {
-        get { return CGFloat(gradientView.layer.shadowOpacity) }
-        set { gradientView.layer.shadowOpacity = Float(newValue) }
+    @IBInspectable open override var shadowRadius: CGFloat {
+        get { return gradientView.shadowRadius }
+        set { gradientView.shadowRadius = newValue }
     }
 
-    @IBInspectable open var shadowRadius: CGFloat {
-        get { return gradientView.layer.shadowRadius }
-        set { gradientView.layer.shadowRadius = newValue }
+    @IBInspectable open override var shadowOffset: CGSize {
+        get { return gradientView.shadowOffset }
+        set { gradientView.shadowOffset = newValue }
     }
 
-    @IBInspectable open var shadowOffset: CGSize {
-        get { return gradientView.layer.shadowOffset }
-        set { gradientView.layer.shadowOffset = newValue }
-    }
-
-    @IBInspectable open var shadowColor: UIColor? {
-        get { return gradientView.layer.shadowColor.map { UIColor(cgColor: $0) } }
-        set { gradientView.layer.shadowColor = newValue?.cgColor }
+    @IBInspectable open override var shadowColor: UIColor? {
+        get { return gradientView.shadowColor }
+        set { gradientView.shadowColor = newValue }
     }
 
     open var maskType = MaskType.fill { didSet { updateMaskType() } }

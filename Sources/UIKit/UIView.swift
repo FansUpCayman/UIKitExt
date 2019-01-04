@@ -82,3 +82,52 @@ extension UIView {
         }
     }
 }
+
+extension UIView {
+    @IBInspectable open var cornerRadius: CGFloat {
+        get { return layer.cornerRadius }
+        set { layer.cornerRadius = newValue }
+    }
+
+    @available(iOS 11.0, *)
+    @IBInspectable open var maskedCornersValue: UInt {
+        get { return maskedCorners.rawValue }
+        set { maskedCorners = CACornerMask(rawValue: newValue) }
+    }
+
+    @available(iOS 11.0, *)
+    open var maskedCorners: CACornerMask {
+        get { return layer.maskedCorners }
+        set { layer.maskedCorners = newValue }
+    }
+
+    @IBInspectable open var borderWidth: CGFloat {
+        get { return layer.borderWidth }
+        set { layer.borderWidth = newValue }
+    }
+
+    @IBInspectable open var borderColor: UIColor? {
+        get { return layer.borderColor.map(UIColor.init) }
+        set { layer.borderColor = newValue?.cgColor }
+    }
+
+    @IBInspectable open var shadowOpacity: CGFloat {
+        get { return CGFloat(layer.shadowOpacity) }
+        set { layer.shadowOpacity = Float(newValue) }
+    }
+
+    @IBInspectable open var shadowRadius: CGFloat {
+        get { return layer.shadowRadius }
+        set { layer.shadowRadius = newValue }
+    }
+
+    @IBInspectable open var shadowOffset: CGSize {
+        get { return layer.shadowOffset }
+        set { layer.shadowOffset = newValue }
+    }
+
+    @IBInspectable open var shadowColor: UIColor? {
+        get { return layer.shadowColor.map(UIColor.init) }
+        set { layer.shadowColor = newValue?.cgColor }
+    }
+}
