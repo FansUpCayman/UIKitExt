@@ -31,6 +31,14 @@ extension Collection {
     }
 }
 
+extension MutableCollection {
+    public mutating func modify(_ action: (inout Element) throws -> ()) rethrows {
+        for index in indices {
+            try action(&self[index])
+        }
+    }
+}
+
 extension RangeReplaceableCollection {
     public mutating func prepend(_ newElement: Element) {
         insert(newElement, at: startIndex)
