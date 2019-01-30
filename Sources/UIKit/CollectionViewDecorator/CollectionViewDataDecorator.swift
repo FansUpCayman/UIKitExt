@@ -25,7 +25,7 @@
 
 import UIKit
 
-public protocol DataDecorator: class {
+public protocol DataDecorator: AnyObject {
     associatedtype View: CellContainer
     associatedtype Cell
     associatedtype S
