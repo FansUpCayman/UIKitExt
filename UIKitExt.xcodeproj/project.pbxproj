@@ -49,6 +49,7 @@
 		C399EF4B21BF899400F5DBB5 /* CollectionViewPageLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C399EF4A21BF899400F5DBB5 /* CollectionViewPageLayout.swift */; };
 		C3D5EEE5220196BA00AE7425 /* AttributedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D5EEE4220196BA00AE7425 /* AttributedLabel.swift */; };
 		C3D5EEE72201975A00AE7425 /* CollectionViewTagLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D5EEE62201975A00AE7425 /* CollectionViewTagLayout.swift */; };
+		C3D5EEF82202CAA300AE7425 /* FlatRepeated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D5EEF72202CAA300AE7425 /* FlatRepeated.swift */; };
 		C3DB5F012193EA510053B881 /* CollectionViewTableLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DB5F002193EA510053B881 /* CollectionViewTableLayout.swift */; };
 		C3DB5F0421951FFF0053B881 /* CollectionViewDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DB5F0321951FFF0053B881 /* CollectionViewDecorator.swift */; };
 		C3DB5F06219522480053B881 /* CollectionViewDecoratorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DB5F05219522480053B881 /* CollectionViewDecoratorExt.swift */; };
@@ -101,6 +102,7 @@
 		C399EF4A21BF899400F5DBB5 /* CollectionViewPageLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewPageLayout.swift; sourceTree = "<group>"; };
 		C3D5EEE4220196BA00AE7425 /* AttributedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedLabel.swift; sourceTree = "<group>"; };
 		C3D5EEE62201975A00AE7425 /* CollectionViewTagLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewTagLayout.swift; sourceTree = "<group>"; };
+		C3D5EEF72202CAA300AE7425 /* FlatRepeated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlatRepeated.swift; sourceTree = "<group>"; };
 		C3DB5F002193EA510053B881 /* CollectionViewTableLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewTableLayout.swift; sourceTree = "<group>"; };
 		C3DB5F0321951FFF0053B881 /* CollectionViewDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewDecorator.swift; sourceTree = "<group>"; };
 		C3DB5F05219522480053B881 /* CollectionViewDecoratorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewDecoratorExt.swift; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 				C314FC8F2175E83000F1623D /* UserDefaults.swift */,
 				C314FC9A2175E8D500F1623D /* NSObject.swift */,
 				C314FCB42176CE0F00F1623D /* OSLog.swift */,
+				C3D5EEF72202CAA300AE7425 /* FlatRepeated.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -324,6 +327,7 @@
 				C314FCAB2175EE4E00F1623D /* UIScrollView.swift in Sources */,
 				C3D5EEE5220196BA00AE7425 /* AttributedLabel.swift in Sources */,
 				C314FCA12175E9F500F1623D /* UICollectionView.swift in Sources */,
+				C3D5EEF82202CAA300AE7425 /* FlatRepeated.swift in Sources */,
 				C314FC932175E83000F1623D /* Numbers.swift in Sources */,
 				C314FCD82177358300F1623D /* BaseViewController.swift in Sources */,
 				C314FCB32176CB1100F1623D /* UIViewController.swift in Sources */,
