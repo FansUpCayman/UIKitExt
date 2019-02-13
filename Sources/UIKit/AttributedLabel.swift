@@ -28,12 +28,14 @@ import UIKit
 @IBDesignable
 open class AttributedLabel: UILabel {
     open override var text: String? { didSet { update() } }
+    open override var textAlignment: NSTextAlignment { didSet { update() } }
 
     @IBInspectable open var minimumLineHeight: CGFloat = 0 { didSet { update() } }
     @IBInspectable open var paragraphSpacing: CGFloat = 0 { didSet { update() } }
 
     private func update() {
         let style = NSMutableParagraphStyle()
+        style.alignment = textAlignment
         style.minimumLineHeight = minimumLineHeight
         style.paragraphSpacing = paragraphSpacing
         let attributes: [NSAttributedString.Key: Any] = [.paragraphStyle: style]
