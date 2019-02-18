@@ -45,6 +45,8 @@ open class TableViewDecorator: NSObject {
             return nil
         }
     }
+
+    open override func doesNotRecognizeSelector(_ aSelector: Selector!) {}
 }
 
 extension TableViewDecorator: UITableViewDataSource {

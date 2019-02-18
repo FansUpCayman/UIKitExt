@@ -45,6 +45,8 @@ open class CollectionViewDecorator: NSObject {
             return nil
         }
     }
+
+    open override func doesNotRecognizeSelector(_ aSelector: Selector!) {}
 }
 
 extension CollectionViewDecorator: UICollectionViewDataSource {
