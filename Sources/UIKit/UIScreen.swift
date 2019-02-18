@@ -51,7 +51,7 @@ extension UIScreen {
             return .extraSmall
         } else if height <= 568 {
             return .small
-        } else if height <= 667 {
+        } else if height <= 736 {
             return .medium
         } else if height <= 812 {
             return .large
