@@ -247,6 +247,8 @@ open class BaseViewController: UIViewController {
             if color != nil {
                 bar.barTintColor = color
                 bar.setBackgroundImage(nil, for: .default)
+                bar.shadowImage = nil
+                bar.isTranslucent = false
             } else {
                 bar.setBackgroundImage(UIImage(), for: .default)
                 bar.shadowImage = UIImage()
@@ -255,6 +257,7 @@ open class BaseViewController: UIViewController {
         case let .image(image, shadow):
             bar.setBackgroundImage(image, for: .default)
             bar.shadowImage = shadow
+            bar.isTranslucent = false
         }
     }
 
