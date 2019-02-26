@@ -27,7 +27,7 @@ import UIKit
 
 extension UIScreen {
     public enum Dimension: Int {
-        case extraSmall, small, medium, large, extraLarge
+        case extraSmall, small, medium, large, extraLarge, extraExtraLarge
     }
 
     public var widthDimension: Dimension {
@@ -51,12 +51,14 @@ extension UIScreen {
             return .extraSmall
         } else if height <= 568 {
             return .small
-        } else if height <= 736 {
+        } else if height <= 667 {
             return .medium
-        } else if height <= 812 {
+        } else if height <= 736 {
             return .large
-        } else {
+        } else if height <= 812 {
             return .extraLarge
+        } else {
+            return .extraExtraLarge
         }
     }
 }
