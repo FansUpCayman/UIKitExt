@@ -38,6 +38,14 @@ extension UIViewController {
         }
     }
 
+    public func hide(animated: Bool = false) {
+        if let nav = navigationController, nav.viewControllers.count > 1 {
+            nav.popViewController(animated: animated)
+        } else {
+            dismiss(animated: animated)
+        }
+    }
+
     public func addChildAndSubview(_ childController: UIViewController) {
         addChild(childController) { view.addSubview($0) }
     }
