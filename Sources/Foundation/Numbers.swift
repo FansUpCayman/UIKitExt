@@ -52,8 +52,12 @@ extension BinaryInteger {
         return Self((Double(self) / Double(other)).rounded(rule))
     }
 
-    public func clamped(interval: Self, base: Self = 0) -> Self {
-        return (self - base).roundDivided(by: interval) * interval + base
+    public func clamped(
+        interval: Self,
+        base: Self = 0,
+        rule: FloatingPointRoundingRule = .toNearestOrAwayFromZero
+    ) -> Self {
+        return (self - base).roundDivided(by: interval, rule: rule) * interval + base
     }
 }
 
@@ -62,8 +66,12 @@ extension FloatingPoint {
         return other != 0 ? self / other : defaultValue
     }
 
-    public func clamped(interval: Self, base: Self = 0) -> Self {
-        return ((self - base) / interval).rounded() * interval + base
+    public func clamped(
+        interval: Self,
+        base: Self = 0,
+        rule: FloatingPointRoundingRule = .toNearestOrAwayFromZero
+    ) -> Self {
+        return ((self - base) / interval).rounded(rule) * interval + base
     }
 }
 
