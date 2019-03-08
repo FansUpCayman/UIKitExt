@@ -54,6 +54,14 @@ open class CollectionViewTableLayout: UICollectionViewFlowLayout {
             UICollectionViewFlowLayout.automaticSize : size
         estimatedItemSize = estimatedItemDimension == 0 ? .zero : estimatedSize
     }
+
+    open override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+        guard let collectionView = collectionView else { return false }
+        switch scrollDirection {
+        case .horizontal: return collectionView.bounds.height != newBounds.height
+        case .vertical: return collectionView.bounds.width != newBounds.width
+        }
+    }
 }
 
 open class AutoWidthCollectionViewCell: UICollectionViewCell {

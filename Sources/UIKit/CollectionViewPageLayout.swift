@@ -72,4 +72,9 @@ open class CollectionViewPageLayout: UICollectionViewFlowLayout {
 
         return offset
     }
+
+    open override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+        guard let collectionView = collectionView else { return false }
+        return collectionView.bounds.size != newBounds.size
+    }
 }
