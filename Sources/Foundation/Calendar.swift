@@ -26,9 +26,58 @@
 import Foundation
 
 extension Calendar {
-    public func ordinalInterval(of component: Component, from: Date, to: Date) -> Int {
-        let fromOrdinality = ordinality(of: component, in: .era, for: from) ?? 0
-        let toOrdinality = ordinality(of: component, in: .era, for: to) ?? 0
-        return toOrdinality - fromOrdinality
+    public func component(_ component: Calendar.Component, from start: Date, to end: Date) -> Int {
+        return dateComponents([component], from: start, to: end)
+            .value(for: component) ?? NSDateComponentUndefined
+    }
+
+    public func component(_ component: Calendar.Component, from start: DateComponents, to end: DateComponents) -> Int {
+        return dateComponents([component], from: start, to: end)
+            .value(for: component) ?? NSDateComponentUndefined
+    }
+
+    public func dateComponents(to component: Component, from date: Date) -> DateComponents {
+        var components: [Component] = [.era, .year, .month, .day, .hour, .minute, .second, .nanosecond]
+
+        if let index = components.firstIndex(of: component) {
+            components.removeSubrange((index + 1)..<components.endIndex)
+        }
+
+        return dateComponents(Set(components), from: date)
+    }
+
+    public func interval(from start: Date, to end: Date, toGranularity component: Calendar.Component) -> Int {
+        return self.component(
+            component,
+            from: dateComponents(to: component, from: start),
+            to: dateComponents(to: component, from: end)
+        )
+    }
+
+    public func dates(
+        after start: Date,
+        before end: Date,
+        matching components: DateComponents,
+        matchingPolicy: MatchingPolicy = .nextTime,
+        repeatedTimePolicy: RepeatedTimePolicy = .first,
+        direction: SearchDirection = .forward
+    ) -> [Date] {
+        var dates = [Date]()
+
+        enumerateDates(
+            startingAfter: start,
+            matching: components,
+            matchingPolicy: matchingPolicy,
+            repeatedTimePolicy: repeatedTimePolicy,
+            direction: direction
+        ) { date, _, stop in
+            if let date = date, date < end {
+                dates.append(date)
+            } else {
+                stop = true
+            }
+        }
+
+        return dates
     }
 }
