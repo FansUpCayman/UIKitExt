@@ -52,6 +52,16 @@ extension BinaryInteger {
         return Self((Double(self) / Double(other)).rounded(rule))
     }
 
+    public func clamped(to range: Range<Self>) -> Self {
+        if self >= range.upperBound {
+            return max(range.upperBound - 1, range.lowerBound)
+        } else if self < range.lowerBound {
+            return range.lowerBound
+        } else {
+            return self
+        }
+    }
+
     public func clamped(
         interval: Self,
         base: Self = 0,
