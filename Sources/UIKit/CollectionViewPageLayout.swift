@@ -28,7 +28,11 @@ import UIKit
 open class CollectionViewPageLayout: UICollectionViewFlowLayout {
     @IBInspectable open var isPagingEnabled: Bool = false
 
-    open var currentIndex: Int { return Int(progress.rounded()) }
+    open var currentIndex: Int {
+        guard let collectionView = collectionView else { return 0 }
+        let count = collectionView.numberOfItems(inSection: 0)
+        return Int(progress.rounded()).clamped(to: 0..<count)
+    }
 
     open var progress: CGFloat {
         guard let collectionView = collectionView else { return 0 }
