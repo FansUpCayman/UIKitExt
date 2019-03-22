@@ -26,6 +26,17 @@
 import UIKit
 
 open class CollectionViewTagLayout: UICollectionViewFlowLayout {
+    public enum Alignment: Int {
+        case left, center, right
+    }
+
+    open var alignment = Alignment.left { didSet { invalidateLayout() } }
+
+    @IBInspectable open var alignmentValue: Int {
+        get { return alignment.rawValue }
+        set { alignment = Alignment(rawValue: newValue) ?? .left }
+    }
+
     public override init() {
         super.init()
         commonInit()
@@ -43,17 +54,27 @@ open class CollectionViewTagLayout: UICollectionViewFlowLayout {
     }
 
     open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        let attributes = super.layoutAttributesForElements(in: rect)
-        var origin = CGPoint(x: 0, y: -1)
+        guard let attributes = super.layoutAttributesForElements(in: rect) else { return nil }
+        let viewWidth = collectionView?.bounds.width ?? 0
+        let groups = Dictionary(grouping: attributes) { $0.frame.origin.y }
 
-        attributes?.forEach { attributes in
-            if attributes.frame.origin.y != origin.y {
-                origin.x = sectionInset.left
-                origin.y = attributes.frame.origin.y
+        for (_, group) in groups {
+            let totalWidth = group.reduce(0) { $0 + $1.frame.width }
+            let rowWidth = totalWidth + CGFloat(group.count - 1) * minimumInteritemSpacing
+            let inset: CGFloat
+
+            switch alignment {
+            case .left: inset = sectionInset.left
+            case .center: inset = (viewWidth - rowWidth) / 2
+            case .right: inset = viewWidth - rowWidth - sectionInset.right
             }
 
-            attributes.frame.origin.x = origin.x
-            origin.x += attributes.bounds.width + minimumInteritemSpacing
+            var x = inset
+
+            for attributes in group {
+                attributes.frame.origin.x = x
+                x += attributes.frame.width + minimumInteritemSpacing
+            }
         }
 
         return attributes
