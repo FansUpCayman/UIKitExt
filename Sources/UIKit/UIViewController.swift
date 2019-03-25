@@ -26,18 +26,6 @@
 import UIKit
 
 extension UIViewController {
-    public var topMostViewController: UIViewController {
-        if let tab = self as? UITabBarController, let selected = tab.selectedViewController {
-            return selected.topMostViewController
-        } else if let nav = self as? UINavigationController, let visible = nav.visibleViewController {
-            return visible.topMostViewController
-        } else if let presented = presentedViewController {
-            return presented.topMostViewController
-        } else {
-            return self
-        }
-    }
-
     public func hide(animated: Bool = false) {
         if let nav = navigationController, nav.viewControllers.count > 1 {
             nav.popViewController(animated: animated)
@@ -64,5 +52,29 @@ extension UIViewController {
         willMove(toParent: nil)
         remove(view)
         removeFromParent()
+    }
+}
+
+public protocol CurrentViewControllerContainer {
+    var currentViewController: UIViewController? { get }
+}
+
+extension UITabBarController: CurrentViewControllerContainer {
+    public var currentViewController: UIViewController? { return selectedViewController }
+}
+
+extension UINavigationController: CurrentViewControllerContainer {
+    public var currentViewController: UIViewController? { return visibleViewController }
+}
+
+extension UIViewController {
+    public var topMostViewController: UIViewController {
+        if let container = self as? CurrentViewControllerContainer, let current = container.currentViewController {
+            return current.topMostViewController
+        } else if let presented = presentedViewController {
+            return presented.topMostViewController
+        } else {
+            return self
+        }
     }
 }
