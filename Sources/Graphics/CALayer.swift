@@ -32,4 +32,18 @@ extension CALayer {
         shadowOffset = CGSize(width: offsetX, height: offsetY)
         shadowColor = color?.cgColor
     }
+
+    public func startSpinning(duration: Double) {
+        let key = #keyPath(CALayer.transform)
+        let animation = CABasicAnimation(keyPath: key)
+        animation.toValue = CATransform3DMakeRotation(.pi / 2, 0, 0, 1)
+        animation.duration = duration / 4
+        animation.repeatCount = .greatestFiniteMagnitude
+        animation.isCumulative = true
+        add(animation, forKey: key)
+    }
+
+    public func stopSpinning() {
+        removeAnimation(forKey: #keyPath(CALayer.transform))
+    }
 }
