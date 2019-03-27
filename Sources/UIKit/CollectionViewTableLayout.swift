@@ -44,7 +44,8 @@ open class CollectionViewTableLayout: UICollectionViewFlowLayout {
             let height = collectionView.bounds.height - sectionInset.vertical
             size = CGSize(width: itemDimension, height: height)
             estimatedSize = CGSize(width: estimatedItemDimension, height: height)
-        case .vertical:
+        case .vertical: fallthrough
+        @unknown default:
             let width = collectionView.bounds.width - sectionInset.horizontal
             size = CGSize(width: width, height: itemDimension)
             estimatedSize = CGSize(width: width, height: estimatedItemDimension)
@@ -59,7 +60,8 @@ open class CollectionViewTableLayout: UICollectionViewFlowLayout {
         guard let collectionView = collectionView else { return false }
         switch scrollDirection {
         case .horizontal: return collectionView.bounds.height != newBounds.height
-        case .vertical: return collectionView.bounds.width != newBounds.width
+        case .vertical: fallthrough
+        @unknown default: return collectionView.bounds.width != newBounds.width
         }
     }
 }

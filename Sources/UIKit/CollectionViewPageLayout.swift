@@ -40,7 +40,8 @@ open class CollectionViewPageLayout: UICollectionViewFlowLayout {
 
         switch scrollDirection {
         case .horizontal: offset = collectionView.contentOffset.x
-        case .vertical: offset = collectionView.contentOffset.y
+        case .vertical: fallthrough
+        @unknown default: offset = collectionView.contentOffset.y
         }
 
         return offset / pageSize
@@ -49,7 +50,8 @@ open class CollectionViewPageLayout: UICollectionViewFlowLayout {
     open var pageSize: CGFloat {
         switch scrollDirection {
         case .horizontal: return itemSize.width + minimumLineSpacing
-        case .vertical: return itemSize.height + minimumLineSpacing
+        case .vertical: fallthrough
+        @unknown default: return itemSize.height + minimumLineSpacing
         }
     }
 
@@ -71,7 +73,8 @@ open class CollectionViewPageLayout: UICollectionViewFlowLayout {
 
         switch scrollDirection {
         case .horizontal: offset.x = offset.x.clamped(interval: pageSize)
-        case .vertical: offset.y = offset.y.clamped(interval: pageSize)
+        case .vertical: fallthrough
+        @unknown default: offset.y = offset.y.clamped(interval: pageSize)
         }
 
         return offset

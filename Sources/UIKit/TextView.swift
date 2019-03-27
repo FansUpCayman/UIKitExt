@@ -81,7 +81,7 @@ open class TextView: UITextView {
     }
 
     deinit {
-        NotificationCenter.default.removeObserver(token)
+        NotificationCenter.default.removeObserver(token!)
     }
 
     open override func layoutSubviews() {
