@@ -45,6 +45,7 @@
 		C314FD1821787E2B00F1623D /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C314FD1721787E2B00F1623D /* NibLoadable.swift */; };
 		C314FD1A217884E300F1623D /* ColorfulView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C314FD19217884E300F1623D /* ColorfulView.swift */; };
 		C314FD1C2178891700F1623D /* ColorfulButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C314FD1B2178891700F1623D /* ColorfulButton.swift */; };
+		C380793C224B7BAF003D0B22 /* CollectionViewEmptyDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C380793B224B7BAF003D0B22 /* CollectionViewEmptyDecorator.swift */; };
 		C399EF4B21BF899400F5DBB5 /* CollectionViewPageLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C399EF4A21BF899400F5DBB5 /* CollectionViewPageLayout.swift */; };
 		C3D5EEE5220196BA00AE7425 /* AttributedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D5EEE4220196BA00AE7425 /* AttributedLabel.swift */; };
 		C3D5EEE72201975A00AE7425 /* CollectionViewTagLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D5EEE62201975A00AE7425 /* CollectionViewTagLayout.swift */; };
@@ -97,6 +98,7 @@
 		C314FD1721787E2B00F1623D /* NibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
 		C314FD19217884E300F1623D /* ColorfulView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorfulView.swift; sourceTree = "<group>"; };
 		C314FD1B2178891700F1623D /* ColorfulButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorfulButton.swift; sourceTree = "<group>"; };
+		C380793B224B7BAF003D0B22 /* CollectionViewEmptyDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewEmptyDecorator.swift; sourceTree = "<group>"; };
 		C399EF4A21BF899400F5DBB5 /* CollectionViewPageLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewPageLayout.swift; sourceTree = "<group>"; };
 		C3D5EEE4220196BA00AE7425 /* AttributedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedLabel.swift; sourceTree = "<group>"; };
 		C3D5EEE62201975A00AE7425 /* CollectionViewTagLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewTagLayout.swift; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 				C3DB5F0321951FFF0053B881 /* CollectionViewDecorator.swift */,
 				C3DB5F05219522480053B881 /* CollectionViewDecoratorExt.swift */,
 				C3DB5F07219526FC0053B881 /* CollectionViewDataDecorator.swift */,
+				C380793B224B7BAF003D0B22 /* CollectionViewEmptyDecorator.swift */,
 			);
 			path = CollectionViewDecorator;
 			sourceTree = "<group>";
@@ -321,6 +324,7 @@
 				C314FCCA217707EC00F1623D /* TableViewDecoratorExt.swift in Sources */,
 				C3DB5F0421951FFF0053B881 /* CollectionViewDecorator.swift in Sources */,
 				C3DB5F0A21953BA70053B881 /* TableViewDataDecorator.swift in Sources */,
+				C380793C224B7BAF003D0B22 /* CollectionViewEmptyDecorator.swift in Sources */,
 				C314FCAB2175EE4E00F1623D /* UIScrollView.swift in Sources */,
 				C3D5EEE5220196BA00AE7425 /* AttributedLabel.swift in Sources */,
 				C314FCA12175E9F500F1623D /* UICollectionView.swift in Sources */,
