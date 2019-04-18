@@ -32,6 +32,8 @@ open class CollectionViewTableLayout: UICollectionViewFlowLayout {
     @IBInspectable open var itemDimension: CGFloat = CollectionViewTableLayout.automaticDimension
         { didSet { invalidateLayout() } }
     @IBInspectable open var estimatedItemDimension: CGFloat = 0 { didSet { invalidateLayout() } }
+    @IBInspectable open var headerDimension: CGFloat = 0 { didSet { invalidateLayout() } }
+    @IBInspectable open var footerDimension: CGFloat = 0 { didSet { invalidateLayout() } }
 
     open override func prepare() {
         super.prepare()
@@ -44,11 +46,15 @@ open class CollectionViewTableLayout: UICollectionViewFlowLayout {
             let height = collectionView.bounds.height - sectionInset.vertical
             size = CGSize(width: itemDimension, height: height)
             estimatedSize = CGSize(width: estimatedItemDimension, height: height)
+            headerReferenceSize = CGSize(width: headerDimension, height: collectionView.bounds.height)
+            footerReferenceSize = CGSize(width: footerDimension, height: collectionView.bounds.height)
         case .vertical: fallthrough
         @unknown default:
             let width = collectionView.bounds.width - sectionInset.horizontal
             size = CGSize(width: width, height: itemDimension)
             estimatedSize = CGSize(width: width, height: estimatedItemDimension)
+            headerReferenceSize = CGSize(width: collectionView.bounds.width, height: headerDimension)
+            footerReferenceSize = CGSize(width: collectionView.bounds.width, height: footerDimension)
         }
 
         itemSize = itemDimension == CollectionViewTableLayout.automaticDimension ?

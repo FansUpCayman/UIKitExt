@@ -45,18 +45,26 @@ open class TableViewEmptyDecorator: TableViewDecorator {
         super.init()
     }
 
+    open override func numberOfSections(in tableView: UITableView) -> Int {
+        return isEmpty ? 1 : super.numberOfSections(in: tableView)
+    }
+
+    open override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return isEmpty ? 1 : super.tableView(tableView, numberOfRowsInSection: section)
+    }
+
     open override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return isEmpty ?
             tableView.dequeue(cellType, for: indexPath) :
             super.tableView(tableView, cellForRowAt: indexPath)
     }
 
-    open func numberOfSections(in tableView: UITableView) -> Int {
-        return isEmpty ? 1 : dataSource?.numberOfSections?(in: tableView) ?? 1
+    open override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return isEmpty ? nil : super.tableView(tableView, viewForHeaderInSection: section)
     }
 
-    open override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return isEmpty ? 1 : super.tableView(tableView, numberOfRowsInSection: section)
+    open override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return isEmpty ? nil : super.tableView(tableView, viewForFooterInSection: section)
     }
 
     open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -66,14 +74,6 @@ open class TableViewEmptyDecorator: TableViewDecorator {
     open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard !isEmpty else { return }
         delegate?.tableView?(tableView, didSelectRowAt: indexPath)
-    }
-
-    open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return isEmpty ? nil : delegate?.tableView?(tableView, viewForHeaderInSection: section)
-    }
-
-    open func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return isEmpty ? nil : delegate?.tableView?(tableView, viewForFooterInSection: section)
     }
 
     open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

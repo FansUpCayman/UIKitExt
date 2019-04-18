@@ -50,6 +50,10 @@ open class CollectionViewDecorator: NSObject {
 }
 
 extension CollectionViewDecorator: UICollectionViewDataSource {
+    open func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return dataSource?.numberOfSections?(in: collectionView) ?? 0
+    }
+
     open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return dataSource?.collectionView(collectionView, numberOfItemsInSection: section) ?? 0
     }
@@ -59,6 +63,15 @@ extension CollectionViewDecorator: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         return dataSource?.collectionView(collectionView, cellForItemAt: indexPath) ?? UICollectionViewCell()
+    }
+
+    open func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
+        return dataSource?.collectionView?(collectionView, viewForSupplementaryElementOfKind: kind, at: indexPath) ??
+            UICollectionReusableView()
     }
 }
 

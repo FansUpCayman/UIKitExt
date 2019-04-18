@@ -25,27 +25,43 @@
 
 import UIKit
 
-open class TableViewDataDecorator<S>: TableViewDecorator, DataDecorator
-    where S: RandomAccessCollection,
-    S.Index == Int
+open class TableViewDataDecorator<Collection>: TableViewDecorator, DataDecorator
+    where Collection: RandomAccessCollection,
+    Collection.Index == Int
 {
     public typealias View = UITableView
     public typealias Cell = UITableViewCell
-    public typealias Item = S.Element
+    public typealias SectionView = UITableViewHeaderFooterView
+    public typealias Section = Collection
+    public typealias Item = Collection.Element
 
-    open var data: S { didSet { tableView?.reloadData() } }
+    open var data: Collection { didSet { tableView?.reloadData() } }
 
     override weak var tableView: UITableView? {
         didSet { added?(tableView) }
     }
 
     private let cellFor: CellFor
+    private let headerFor: SectionViewFor?
+    private let footerFor: SectionViewFor?
     private let added: ((UITableView?) -> ())?
 
-    public required init(_ data: S, cellFor: @escaping CellFor, added: ((UITableView?) -> ())? = nil) {
+    public required init(
+        _ data: Collection,
+        cellFor: @escaping CellFor,
+        headerFor: SectionViewFor? = nil,
+        footerFor: SectionViewFor? = nil,
+        added: ((UITableView?) -> ())? = nil
+    ) {
         self.data = data
         self.cellFor = cellFor
+        self.headerFor = headerFor
+        self.footerFor = footerFor
         self.added = added
+    }
+
+    open override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
     }
 
     open override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -55,34 +71,56 @@ open class TableViewDataDecorator<S>: TableViewDecorator, DataDecorator
     open override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return cellFor(tableView, indexPath, data[indexPath.row])
     }
+
+    open override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return headerFor?(tableView, IndexPath(row: 0, section: section), data) ??
+            super.tableView(tableView, viewForHeaderInSection: section)
+    }
+
+    open override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return footerFor?(tableView, IndexPath(row: 0, section: section), data) ??
+            super.tableView(tableView, viewForFooterInSection: section)
+    }
 }
 
-open class TableViewSectionDataDecorator<S>: TableViewDecorator, DataDecorator
-    where S: RandomAccessCollection,
-    S.Index == Int,
-    S.Element: RandomAccessCollection,
-    S.Element.Index == Int
+open class TableViewSectionDataDecorator<Collection>: TableViewDecorator, DataDecorator
+    where Collection: RandomAccessCollection,
+    Collection.Index == Int,
+    Collection.Element: RandomAccessCollection,
+    Collection.Element.Index == Int
 {
     public typealias View = UITableView
     public typealias Cell = UITableViewCell
-    public typealias Item = S.Element.Element
+    public typealias SectionView = UITableViewHeaderFooterView
+    public typealias Section = Collection.Element
+    public typealias Item = Collection.Element.Element
 
-    open var data: S { didSet { tableView?.reloadData() } }
+    open var data: Collection { didSet { tableView?.reloadData() } }
 
     override weak var tableView: UITableView? {
         didSet { added?(tableView) }
     }
 
     private let cellFor: CellFor
+    private let headerFor: SectionViewFor?
+    private let footerFor: SectionViewFor?
     private let added: ((UITableView?) -> ())?
 
-    public required init(_ data: S, cellFor: @escaping CellFor, added: ((UITableView?) -> ())? = nil) {
+    public required init(
+        _ data: Collection,
+        cellFor: @escaping CellFor,
+        headerFor: SectionViewFor? = nil,
+        footerFor: SectionViewFor? = nil,
+        added: ((UITableView?) -> ())? = nil
+    ) {
         self.data = data
         self.cellFor = cellFor
+        self.headerFor = headerFor
+        self.footerFor = footerFor
         self.added = added
     }
 
-    open func numberOfSections(in tableView: UITableView) -> Int {
+    open override func numberOfSections(in tableView: UITableView) -> Int {
         return data.count
     }
 
@@ -92,5 +130,15 @@ open class TableViewSectionDataDecorator<S>: TableViewDecorator, DataDecorator
 
     open override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return cellFor(tableView, indexPath, data[indexPath.section][indexPath.item])
+    }
+
+    open override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return headerFor?(tableView, IndexPath(row: 0, section: section), data[section]) ??
+            super.tableView(tableView, viewForHeaderInSection: section)
+    }
+
+    open override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return footerFor?(tableView, IndexPath(row: 0, section: section), data[section]) ??
+            super.tableView(tableView, viewForFooterInSection: section)
     }
 }

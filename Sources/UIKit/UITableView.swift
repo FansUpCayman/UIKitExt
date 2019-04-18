@@ -25,20 +25,28 @@
 
 import UIKit
 
-extension UITableView: CellContainer {
-    public func register<Cell: AnyObject>(_ type: Cell.Type) {
+extension UITableView: RegisterDequeueable {
+    public func register<Cell: UIView>(_ type: Cell.Type) {
         register(type, forCellReuseIdentifier: String(describing: type))
     }
 
-    public func register<View: UITableViewHeaderFooterView>(_ type: View.Type) {
+    public func registerHeader<Header: UIView>(_ type: Header.Type) {
         register(type, forHeaderFooterViewReuseIdentifier: String(describing: type))
     }
 
-    public func dequeue<Cell: AnyObject>(_ type: Cell.Type, for indexPath: IndexPath) -> Cell {
+    public func registerFooter<Footer: UIView>(_ type: Footer.Type) {
+        registerHeader(type)
+    }
+
+    public func dequeue<Cell: UIView>(_ type: Cell.Type, for indexPath: IndexPath) -> Cell {
         return dequeueReusableCell(withIdentifier: String(describing: type), for: indexPath) as! Cell
     }
 
-    public func dequeue<View: UITableViewHeaderFooterView>(_ type: View.Type) -> View {
-        return dequeueReusableHeaderFooterView(withIdentifier: String(describing: type)) as! View
+    public func dequeueHeader<Header: UIView>(_ type: Header.Type, for indexPath: IndexPath) -> Header {
+        return dequeueReusableHeaderFooterView(withIdentifier: String(describing: type)) as! Header
+    }
+
+    public func dequeueFooter<Footer: UIView>(_ type: Footer.Type, for indexPath: IndexPath) -> Footer {
+        return dequeueHeader(type, for: indexPath)
     }
 }

@@ -26,49 +26,107 @@
 import UIKit
 
 public protocol DataDecorator: AnyObject {
-    associatedtype View: CellContainer
+    associatedtype View: RegisterDequeueable
     associatedtype Cell
-    associatedtype S
+    associatedtype SectionView
+    associatedtype Collection
+    associatedtype Section
     associatedtype Item
-    typealias CellFor = (View, IndexPath, Item) -> Cell
 
-    var data: S { get set }
-    init(_ data: S, cellFor: @escaping CellFor, added: ((View?) -> ())?)
+    typealias CellFor = (View, IndexPath, Item) -> Cell
+    typealias SectionViewFor = (View, IndexPath, Section) -> SectionView
+
+    var data: Collection { get set }
+
+    init(
+        _ data: Collection,
+        cellFor: @escaping CellFor,
+        headerFor: SectionViewFor?,
+        footerFor: SectionViewFor?,
+        added: ((View?) -> ())?
+    )
 }
 
 extension DataDecorator {
-    public init<C: AnyObject>(_ data: S, config: @escaping (C, IndexPath, Item) -> ()) {
-        self.init(data, cellFor: { collectionView, indexPath, element in
-            let cell = collectionView.dequeue(C.self, for: indexPath)
-            config(cell, indexPath, element)
-            return cell as! Cell
-        }, added: { collectionView in
-            collectionView?.register(C.self)
-        })
+    public init<C: UIView, Header: UIView, Footer: UIView>(
+        _ data: Collection,
+        configCell: @escaping (C, IndexPath, Item) -> (),
+        configHeader: ((Header, IndexPath, Section) -> ())? = nil,
+        configFooter: ((Footer, IndexPath, Section) -> ())? = nil
+    ) {
+        self.init(
+            data,
+            cellFor: { collectionView, indexPath, element in
+                let cell = collectionView.dequeue(C.self, for: indexPath)
+                configCell(cell, indexPath, element)
+                return cell as! Cell
+            },
+            headerFor: configHeader.map { configHeader in
+                { collectionView, indexPath, section in
+                    let header = collectionView.dequeueHeader(Header.self, for: indexPath)
+                    configHeader(header, indexPath, section)
+                    return header as! SectionView
+                }
+            },
+            footerFor: configFooter.map { configFooter in
+                { collectionView, indexPath, section in
+                    let footer = collectionView.dequeueFooter(Footer.self, for: indexPath)
+                    configFooter(footer, indexPath, section)
+                    return footer as! SectionView
+                }
+            },
+            added: { collectionView in
+                collectionView?.register(C.self)
+
+                if configHeader != nil {
+                    collectionView?.registerHeader(Header.self)
+                }
+
+                if configFooter != nil {
+                    collectionView?.registerFooter(Footer.self)
+                }
+            }
+        )
     }
 }
 
-open class CollectionViewDataDecorator<S>: CollectionViewDecorator, DataDecorator
-    where S: RandomAccessCollection,
-    S.Index == Int
+open class CollectionViewDataDecorator<Collection>: CollectionViewDecorator, DataDecorator
+    where Collection: RandomAccessCollection,
+    Collection.Index == Int
 {
     public typealias View = UICollectionView
     public typealias Cell = UICollectionViewCell
-    public typealias Item = S.Element
+    public typealias SectionView = UICollectionReusableView
+    public typealias Section = Collection
+    public typealias Item = Collection.Element
 
-    open var data: S { didSet { collectionView?.reloadData() } }
+    open var data: Collection { didSet { collectionView?.reloadData() } }
 
     override weak var collectionView: UICollectionView? {
         didSet { added?(collectionView) }
     }
 
     private let cellFor: CellFor
+    private let headerFor: SectionViewFor?
+    private let footerFor: SectionViewFor?
     private let added: ((UICollectionView?) -> ())?
 
-    public required init(_ data: S, cellFor: @escaping CellFor, added: ((UICollectionView?) -> ())? = nil) {
+    public required init(
+        _ data: Collection,
+        cellFor: @escaping CellFor,
+        headerFor: SectionViewFor? = nil,
+        footerFor: SectionViewFor? = nil,
+        added: ((UICollectionView?) -> ())? = nil
+    ) {
         self.data = data
         self.cellFor = cellFor
+        self.headerFor = headerFor
+        self.footerFor = footerFor
         self.added = added
+    }
+
+    open override func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
     }
 
     open override func collectionView(
@@ -84,34 +142,65 @@ open class CollectionViewDataDecorator<S>: CollectionViewDecorator, DataDecorato
     ) -> UICollectionViewCell {
         return cellFor(collectionView, indexPath, data[indexPath.item])
     }
+
+    open override func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
+        let view: UICollectionReusableView?
+
+        switch kind {
+        case UICollectionView.elementKindSectionHeader:
+            view = headerFor?(collectionView, indexPath, data)
+        case UICollectionView.elementKindSectionFooter:
+            view = footerFor?(collectionView, indexPath, data)
+        default:
+            view = nil
+        }
+
+        return view ?? super.collectionView(collectionView, viewForSupplementaryElementOfKind: kind, at: indexPath)
+    }
 }
 
-open class CollectionViewSectionDataDecorator<S>: CollectionViewDecorator, DataDecorator
-    where S: RandomAccessCollection,
-    S.Index == Int,
-    S.Element: RandomAccessCollection,
-    S.Element.Index == Int
+open class CollectionViewSectionDataDecorator<Collection>: CollectionViewDecorator, DataDecorator
+    where Collection: RandomAccessCollection,
+    Collection.Index == Int,
+    Collection.Element: RandomAccessCollection,
+    Collection.Element.Index == Int
 {
     public typealias View = UICollectionView
     public typealias Cell = UICollectionViewCell
-    public typealias Item = S.Element.Element
+    public typealias SectionView = UICollectionReusableView
+    public typealias Section = Collection.Element
+    public typealias Item = Collection.Element.Element
 
-    open var data: S { didSet { collectionView?.reloadData() } }
+    open var data: Collection { didSet { collectionView?.reloadData() } }
 
     override weak var collectionView: UICollectionView? {
         didSet { added?(collectionView) }
     }
 
     private let cellFor: CellFor
+    private let headerFor: SectionViewFor?
+    private let footerFor: SectionViewFor?
     private let added: ((UICollectionView?) -> ())?
 
-    public required init(_ data: S, cellFor: @escaping CellFor, added: ((UICollectionView?) -> ())? = nil) {
+    public required init(
+        _ data: Collection,
+        cellFor: @escaping CellFor,
+        headerFor: SectionViewFor? = nil,
+        footerFor: SectionViewFor? = nil,
+        added: ((UICollectionView?) -> ())? = nil
+    ) {
         self.data = data
         self.cellFor = cellFor
+        self.headerFor = headerFor
+        self.footerFor = footerFor
         self.added = added
     }
 
-    open func numberOfSections(in collectionView: UICollectionView) -> Int {
+    open override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return data.count
     }
 
@@ -127,5 +216,25 @@ open class CollectionViewSectionDataDecorator<S>: CollectionViewDecorator, DataD
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         return cellFor(collectionView, indexPath, data[indexPath.section][indexPath.item])
+    }
+
+    open override func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
+        let section = data[indexPath.section]
+        let view: UICollectionReusableView?
+
+        switch kind {
+        case UICollectionView.elementKindSectionHeader:
+            view = headerFor?(collectionView, indexPath, section)
+        case UICollectionView.elementKindSectionFooter:
+            view = footerFor?(collectionView, indexPath, section)
+        default:
+            view = nil
+        }
+
+        return view ?? super.collectionView(collectionView, viewForSupplementaryElementOfKind: kind, at: indexPath)
     }
 }

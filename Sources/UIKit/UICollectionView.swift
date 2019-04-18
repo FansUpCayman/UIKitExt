@@ -38,48 +38,54 @@ extension UICollectionView {
     }
 }
 
-public protocol CellContainer {
-    func register<Cell: AnyObject>(_ type: Cell.Type)
-    func dequeue<Cell: AnyObject>(_ type: Cell.Type, for indexPath: IndexPath) -> Cell
+public protocol RegisterDequeueable {
+    func register<Cell: UIView>(_ type: Cell.Type)
+    func registerHeader<Header: UIView>(_ type: Header.Type)
+    func registerFooter<Footer: UIView>(_ type: Footer.Type)
+    func dequeue<Cell: UIView>(_ type: Cell.Type, for indexPath: IndexPath) -> Cell
+    func dequeueHeader<Header: UIView>(_ type: Header.Type, for indexPath: IndexPath) -> Header
+    func dequeueFooter<Footer: UIView>(_ type: Footer.Type, for indexPath: IndexPath) -> Footer
 }
 
-extension UICollectionView: CellContainer {
-    public enum ElementKind {
-        case sectionHeader
-        case sectionFooter
-        case custom(String)
-
-        var value: String {
-            switch self {
-            case .sectionHeader: return UICollectionView.elementKindSectionHeader
-            case .sectionFooter: return UICollectionView.elementKindSectionFooter
-            case let .custom(string): return string
-            }
-        }
-    }
-
-    public func register<Cell: AnyObject>(_ type: Cell.Type) {
+extension UICollectionView: RegisterDequeueable {
+    public func register<Cell: UIView>(_ type: Cell.Type) {
         register(type, forCellWithReuseIdentifier: String(describing: type))
     }
 
-    public func register<View: UICollectionReusableView>(_ type: View.Type, ofKind kind: ElementKind) {
-        register(type, forSupplementaryViewOfKind: kind.value, withReuseIdentifier: String(describing: type))
+    public func registerHeader<Header: UIView>(_ type: Header.Type) {
+        register(
+            type,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: String(describing: type)
+        )
     }
 
-    public func dequeue<Cell: AnyObject>(_ type: Cell.Type, for indexPath: IndexPath) -> Cell {
+    public func registerFooter<Footer: UIView>(_ type: Footer.Type) {
+        register(
+            type,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+            withReuseIdentifier: String(describing: type)
+        )
+    }
+
+    public func dequeue<Cell: UIView>(_ type: Cell.Type, for indexPath: IndexPath) -> Cell {
         return dequeueReusableCell(withReuseIdentifier: String(describing: type), for: indexPath) as! Cell
     }
 
-    public func dequeue<View: UICollectionReusableView>(
-        _ type: View.Type,
-        ofKind kind: ElementKind,
-        for indexPath: IndexPath
-    ) -> View {
+    public func dequeueHeader<Header: UIView>(_ type: Header.Type, for indexPath: IndexPath) -> Header {
         return dequeueReusableSupplementaryView(
-            ofKind: kind.value,
+            ofKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: String(describing: type),
             for: indexPath
-        ) as! View
+        ) as! Header
+    }
+
+    public func dequeueFooter<Footer: UIView>(_ type: Footer.Type, for indexPath: IndexPath) -> Footer {
+        return dequeueReusableSupplementaryView(
+            ofKind: UICollectionView.elementKindSectionFooter,
+            withReuseIdentifier: String(describing: type),
+            for: indexPath
+        ) as! Footer
     }
 }
 

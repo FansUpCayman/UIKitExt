@@ -47,12 +47,12 @@ open class CollectionViewEmptyDecorator: CollectionViewDecorator {
         super.init()
     }
 
-    open override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return isEmpty ? 1 : super.collectionView(collectionView, numberOfItemsInSection: section)
+    open override func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return isEmpty ? 1 : super.numberOfSections(in: collectionView)
     }
 
-    open func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return isEmpty ? 1 : dataSource?.numberOfSections?(in: collectionView) ?? 1
+    open override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return isEmpty ? 1 : super.collectionView(collectionView, numberOfItemsInSection: section)
     }
 
     open override func collectionView(

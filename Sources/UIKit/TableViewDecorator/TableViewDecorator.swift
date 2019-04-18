@@ -50,13 +50,25 @@ open class TableViewDecorator: NSObject {
 }
 
 extension TableViewDecorator: UITableViewDataSource {
-    open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return dataSource?.tableView(tableView, cellForRowAt: indexPath) ?? UITableViewCell()
+    open func numberOfSections(in tableView: UITableView) -> Int {
+        return dataSource?.numberOfSections?(in: tableView) ?? 0
     }
 
     open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataSource?.tableView(tableView, numberOfRowsInSection: section) ?? 0
     }
+
+    open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return dataSource?.tableView(tableView, cellForRowAt: indexPath) ?? UITableViewCell()
+    }
 }
 
-extension TableViewDecorator: UITableViewDelegate {}
+extension TableViewDecorator: UITableViewDelegate {
+    open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return delegate?.tableView?(tableView, viewForHeaderInSection: section)
+    }
+
+    open func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return delegate?.tableView?(tableView, viewForFooterInSection: section)
+    }
+}
