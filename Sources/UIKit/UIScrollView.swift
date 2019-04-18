@@ -28,10 +28,15 @@ import UIKit
 extension UIScrollView {
     @available(iOS 11.0, *)
     public var adjustedContentOffset: CGPoint {
-        return CGPoint(
-            x: contentOffset.x + adjustedContentInset.left,
-            y: contentOffset.y + adjustedContentInset.top
-        )
+        get {
+            return CGPoint(
+                x: contentOffset.x + adjustedContentInset.left,
+                y: contentOffset.y + adjustedContentInset.top
+            )
+        }
+        set {
+            setAdjustedContentOffset(newValue, animated: false)
+        }
     }
 
     public var startOffset: CGPoint {
@@ -59,6 +64,15 @@ extension UIScrollView {
             x: max(contentSize.width + insetX - bounds.width, start.x),
             y: max(contentSize.height + insetY - bounds.height, start.y)
         )
+    }
+
+    @available(iOS 11.0, *)
+    public func setAdjustedContentOffset(_ offset: CGPoint, animated: Bool) {
+        let newOffset = CGPoint(
+            x: offset.x - adjustedContentInset.left,
+            y: offset.y - adjustedContentInset.top
+        )
+        setContentOffset(newOffset, animated: animated)
     }
 
     public func scrollToStart(animated: Bool = false) {
