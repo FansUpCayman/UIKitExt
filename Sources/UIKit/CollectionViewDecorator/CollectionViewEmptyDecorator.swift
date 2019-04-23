@@ -35,8 +35,8 @@ open class CollectionViewEmptyDecorator: CollectionViewDecorator {
     private var isEmpty: Bool {
         guard let collectionView = collectionView, let dataSource = dataSource else { return true }
 
-        if let sections = dataSource.numberOfSections?(in: collectionView), sections > 1 {
-            return false
+        if let sections = dataSource.numberOfSections?(in: collectionView), sections != 1 {
+            return sections == 0
         } else {
             return dataSource.collectionView(collectionView, numberOfItemsInSection: 0) <= 0
         }

@@ -32,8 +32,8 @@ open class TableViewEmptyDecorator: TableViewDecorator {
     private var isEmpty: Bool {
         guard let tableView = tableView, let dataSource = dataSource else { return true }
 
-        if let sections = dataSource.numberOfSections?(in: tableView), sections > 1 {
-            return false
+        if let sections = dataSource.numberOfSections?(in: tableView), sections != 1 {
+            return sections == 0
         } else {
             return dataSource.tableView(tableView, numberOfRowsInSection: 0) <= 0
         }
