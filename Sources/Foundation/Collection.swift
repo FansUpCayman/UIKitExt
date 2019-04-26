@@ -25,6 +25,18 @@
 
 import Foundation
 
+extension Sequence {
+    public func sum<T: AdditiveArithmetic>(_ transform: (Element) throws -> T) rethrows -> T {
+        return try reduce(.zero) { try $0 + transform($1) }
+    }
+}
+
+extension Sequence where Element: AdditiveArithmetic {
+    public func sum() -> Element {
+        return sum { $0 }
+    }
+}
+
 extension Collection {
     public subscript(safe index: Index) -> Element? {
         return indices.contains(index) ? self[index] : nil
