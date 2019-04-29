@@ -33,6 +33,13 @@ extension UIColor {
         public var alpha: CGFloat = 1
 
         public init() {}
+
+        public init(hex: Int, alpha: CGFloat) {
+            red = CGFloat(hex / 0x10000 % 0x100) / 0xff
+            green = CGFloat(hex / 0x100 % 0x100) / 0xff
+            blue = CGFloat(hex % 0x100) / 0xff
+            self.alpha = alpha
+        }
     }
 
     public var rgba: RGBA {
@@ -43,5 +50,19 @@ extension UIColor {
 
     public convenience init(rgba: RGBA) {
         self.init(red: rgba.red, green: rgba.green, blue: rgba.blue, alpha: rgba.alpha)
+    }
+
+    @available(iOS 10.0, *)
+    public convenience init(displayP3RGBA rgba: RGBA) {
+        self.init(displayP3Red: rgba.red, green: rgba.green, blue: rgba.blue, alpha: rgba.alpha)
+    }
+
+    public convenience init(hex: Int, alpha: CGFloat = 1) {
+        self.init(rgba: RGBA(hex: hex, alpha: alpha))
+    }
+
+    @available(iOS 10.0, *)
+    public convenience init(displayP3Hex hex: Int, alpha: CGFloat = 1) {
+        self.init(displayP3RGBA: RGBA(hex: hex, alpha: alpha))
     }
 }
