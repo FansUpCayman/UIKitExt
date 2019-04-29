@@ -64,3 +64,23 @@ open class CollectionViewEmptyDecorator: CollectionViewDecorator {
             super.collectionView(collectionView, cellForItemAt: indexPath)
     }
 }
+
+extension CollectionViewEmptyDecorator: UICollectionViewDelegateFlowLayout {
+    open func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        referenceSizeForHeaderInSection section: Int
+    ) -> CGSize {
+        guard let layout = collectionViewLayout as? UICollectionViewFlowLayout else { return .zero }
+        return isEmpty ? .zero : layout.headerReferenceSize
+    }
+
+    open func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        referenceSizeForFooterInSection section: Int
+    ) -> CGSize {
+        guard let layout = collectionViewLayout as? UICollectionViewFlowLayout else { return .zero }
+        return isEmpty ? .zero : layout.footerReferenceSize
+    }
+}
