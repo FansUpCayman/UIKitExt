@@ -25,13 +25,14 @@
 
 import UIKit
 
+@IBDesignable
 open class ShapeView: UIView {
     open var path: CGPath? {
         get { return shapeLayer.path }
         set { shapeLayer.path = newValue }
     }
 
-    open var fillColor: UIColor? {
+    @IBInspectable open var fillColor: UIColor? {
         get { return shapeLayer.fillColor.map { UIColor(cgColor: $0) } }
         set { shapeLayer.fillColor = newValue?.cgColor }
     }
@@ -51,7 +52,7 @@ open class ShapeView: UIView {
         set { shapeLayer.lineDashPattern = newValue?.map { NSNumber(value: Double($0)) } }
     }
 
-    open var lineDashPhase: CGFloat {
+    @IBInspectable open var lineDashPhase: CGFloat {
         get { return shapeLayer.lineDashPhase }
         set { shapeLayer.lineDashPhase = newValue }
     }
@@ -61,27 +62,27 @@ open class ShapeView: UIView {
         set { shapeLayer.lineJoin = newValue }
     }
 
-    open var lineWidth: CGFloat {
+    @IBInspectable open var lineWidth: CGFloat {
         get { return shapeLayer.lineWidth }
         set { shapeLayer.lineWidth = newValue }
     }
 
-    open var miterLimit: CGFloat {
+    @IBInspectable open var miterLimit: CGFloat {
         get { return shapeLayer.miterLimit }
         set { shapeLayer.miterLimit = newValue }
     }
 
-    open var strokeColor: UIColor? {
+    @IBInspectable open var strokeColor: UIColor? {
         get { return shapeLayer.strokeColor.map { UIColor(cgColor: $0) } }
         set { shapeLayer.strokeColor = newValue?.cgColor }
     }
 
-    open var strokeStart: CGFloat {
+    @IBInspectable open var strokeStart: CGFloat {
         get { return shapeLayer.strokeStart }
         set { shapeLayer.strokeStart = newValue }
     }
 
-    open var strokeEnd: CGFloat {
+    @IBInspectable open var strokeEnd: CGFloat {
         get { return shapeLayer.strokeEnd }
         set { shapeLayer.strokeEnd = newValue }
     }
