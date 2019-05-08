@@ -44,10 +44,14 @@ extension Collection {
 }
 
 extension MutableCollection {
-    public mutating func modify(_ action: (inout Element) throws -> ()) rethrows {
+    public mutating func modify(_ action: (inout Element) throws -> Void) rethrows {
         for index in indices {
-            try action(&self[index])
+            try modify(at: index, action: action)
         }
+    }
+
+    public mutating func modify(at index: Index, action: (inout Element) throws -> Void) rethrows {
+        try action(&self[index])
     }
 }
 
