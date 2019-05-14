@@ -74,3 +74,15 @@ extension AnyRandomAccessCollection {
         return distance(from: startIndex, to: index)
     }
 }
+
+extension Dictionary {
+    public mutating func modify(_ action: (inout Value?) throws -> Void) rethrows {
+        for key in keys {
+            try modify(key: key, action: action)
+        }
+    }
+
+    public mutating func modify(key: Key, action: (inout Value?) throws -> Void) rethrows {
+        try action(&self[key])
+    }
+}
