@@ -45,6 +45,7 @@
 		C314FD1821787E2B00F1623D /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C314FD1721787E2B00F1623D /* NibLoadable.swift */; };
 		C314FD1A217884E300F1623D /* ColorfulView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C314FD19217884E300F1623D /* ColorfulView.swift */; };
 		C314FD1C2178891700F1623D /* ColorfulButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C314FD1B2178891700F1623D /* ColorfulButton.swift */; };
+		C32E311D228EA17F00ED79D9 /* IntIndexCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32E311C228EA17F00ED79D9 /* IntIndexCollection.swift */; };
 		C33BF0C5226D5C6F0063725E /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33BF0C4226D5C6F0063725E /* VisualEffectView.swift */; };
 		C380793C224B7BAF003D0B22 /* CollectionViewEmptyDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C380793B224B7BAF003D0B22 /* CollectionViewEmptyDecorator.swift */; };
 		C399EF4B21BF899400F5DBB5 /* CollectionViewPageLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C399EF4A21BF899400F5DBB5 /* CollectionViewPageLayout.swift */; };
@@ -99,6 +100,7 @@
 		C314FD1721787E2B00F1623D /* NibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
 		C314FD19217884E300F1623D /* ColorfulView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorfulView.swift; sourceTree = "<group>"; };
 		C314FD1B2178891700F1623D /* ColorfulButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorfulButton.swift; sourceTree = "<group>"; };
+		C32E311C228EA17F00ED79D9 /* IntIndexCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntIndexCollection.swift; sourceTree = "<group>"; };
 		C33BF0C4226D5C6F0063725E /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 		C380793B224B7BAF003D0B22 /* CollectionViewEmptyDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewEmptyDecorator.swift; sourceTree = "<group>"; };
 		C399EF4A21BF899400F5DBB5 /* CollectionViewPageLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewPageLayout.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 				C314FC9A2175E8D500F1623D /* NSObject.swift */,
 				C314FCB42176CE0F00F1623D /* OSLog.swift */,
 				C3D5EEF72202CAA300AE7425 /* FlatRepeated.swift */,
+				C32E311C228EA17F00ED79D9 /* IntIndexCollection.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -336,6 +339,7 @@
 				C314FCB32176CB1100F1623D /* UIViewController.swift in Sources */,
 				C3DB5F08219526FC0053B881 /* CollectionViewDataDecorator.swift in Sources */,
 				C314FCA52175EBEA00F1623D /* UIEdgeInsets.swift in Sources */,
+				C32E311D228EA17F00ED79D9 /* IntIndexCollection.swift in Sources */,
 				C314FC9D2175E94500F1623D /* CALayer.swift in Sources */,
 				C314FC982175E83000F1623D /* Calendar.swift in Sources */,
 				C314FCD021770AAA00F1623D /* NavigationController.swift in Sources */,

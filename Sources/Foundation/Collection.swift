@@ -65,16 +65,6 @@ extension RangeReplaceableCollection {
     }
 }
 
-extension AnyRandomAccessCollection {
-    public subscript<BaseIndex: Comparable>(position: BaseIndex) -> Element {
-        return self[AnyIndex(position)]
-    }
-
-    public func intIndex(_ index: Index) -> Int {
-        return distance(from: startIndex, to: index)
-    }
-}
-
 extension Dictionary {
     public mutating func modify(_ action: (inout Value?) throws -> Void) rethrows {
         for key in keys {
