@@ -111,39 +111,55 @@ extension Double: DoubleConvertible {
     public var toDouble: Double { return self }
 }
 
-private let intFormatter = NumberFormatter()
-
 extension BinaryInteger {
-    public func formatted() -> String {
-        return intFormatter.string(from: NSNumber(value: Int(self))) ?? ""
+    public func formatted(
+        style: NumberFormatter.Style = .none,
+        config: ((NumberFormatter) -> Void)? = nil
+    ) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = style
+        config?(formatter)
+        return formatter.string(from: NSNumber(value: Int(self))) ?? ""
     }
 }
 
-private let doubleFormatter: NumberFormatter = {
-    let formatter = NumberFormatter()
-    formatter.minimumIntegerDigits = 1
-    return formatter
-}()
-
-private let durationFormatter = DateComponentsFormatter()
-
 extension BinaryFloatingPoint {
-    public func formatted(fraction: Int = 2) -> String {
-        doubleFormatter.minimumFractionDigits = fraction
-        doubleFormatter.maximumFractionDigits = fraction
-        return doubleFormatter.string(from: NSNumber(value: Double(self))) ?? ""
+    public func formatted(
+        style: NumberFormatter.Style = .none,
+        minFraction: Int? = nil,
+        maxFraction: Int? = nil,
+        fraction: Int? = nil,
+        config: ((NumberFormatter) -> Void)? = nil
+    ) -> String {
+        let formatter = NumberFormatter()
+        formatter.minimumIntegerDigits = 1
+        formatter.numberStyle = style
+        if style == .none { formatter.maximumFractionDigits = 2 }
+        if let minFraction = minFraction { formatter.minimumFractionDigits = minFraction }
+        if let maxFraction = maxFraction { formatter.maximumFractionDigits = maxFraction }
+
+        if let fraction = fraction {
+            formatter.minimumFractionDigits = fraction
+            formatter.maximumFractionDigits = fraction
+        }
+
+        config?(formatter)
+        return formatter.string(from: NSNumber(value: Double(self))) ?? ""
     }
 
     public func formattedDuration(
         units: NSCalendar.Unit,
         maxUnitCount: Int = 0,
         zeroPad: Bool = false,
-        unitsStyle: DateComponentsFormatter.UnitsStyle = .positional
+        unitsStyle: DateComponentsFormatter.UnitsStyle = .positional,
+        config: ((DateComponentsFormatter) -> Void)? = nil
     ) -> String {
-        durationFormatter.allowedUnits = units
-        durationFormatter.maximumUnitCount = maxUnitCount
-        durationFormatter.zeroFormattingBehavior = zeroPad ? .pad : .default
-        durationFormatter.unitsStyle = unitsStyle
-        return durationFormatter.string(from: Double(self)) ?? ""
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = units
+        formatter.maximumUnitCount = maxUnitCount
+        formatter.zeroFormattingBehavior = zeroPad ? .pad : .default
+        formatter.unitsStyle = unitsStyle
+        config?(formatter)
+        return formatter.string(from: Double(self)) ?? ""
     }
 }

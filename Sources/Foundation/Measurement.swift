@@ -26,25 +26,40 @@
 import Foundation
 
 @available(iOS 10.0, *)
-private let formatter: MeasurementFormatter = {
-    let formatter = MeasurementFormatter()
-    formatter.unitOptions = .providedUnit
-    return formatter
-}()
-
-@available(iOS 10.0, *)
 extension Measurement {
-    public func formatted(fraction: Int = 2, unitStyle: Formatter.UnitStyle = .medium) -> String {
+    public func formatted(
+        minFraction: Int = 0,
+        maxFraction: Int = 2,
+        fraction: Int? = nil,
+        unitStyle: Formatter.UnitStyle = .medium,
+        config: ((MeasurementFormatter) -> Void)? = nil
+    ) -> String {
+        let formatter = MeasurementFormatter()
+        formatter.unitOptions = .providedUnit
         formatter.unitStyle = unitStyle
-        formatter.numberFormatter.maximumFractionDigits = fraction
+        formatter.numberFormatter.minimumFractionDigits = minFraction
+        formatter.numberFormatter.maximumFractionDigits = maxFraction
+
+        if let fraction = fraction {
+            formatter.numberFormatter.minimumFractionDigits = fraction
+            formatter.numberFormatter.maximumFractionDigits = fraction
+        }
+
+        config?(formatter)
         return formatter.string(from: self)
     }
 }
 
 @available(iOS 10.0, *)
 extension Unit {
-    public func formatted(unitStyle: Formatter.UnitStyle = .medium) -> String {
+    public func formatted(
+        unitStyle: Formatter.UnitStyle = .medium,
+        config: ((MeasurementFormatter) -> Void)? = nil
+    ) -> String {
+        let formatter = MeasurementFormatter()
+        formatter.unitOptions = .providedUnit
         formatter.unitStyle = unitStyle
+        config?(formatter)
         return formatter.string(from: self)
     }
 }

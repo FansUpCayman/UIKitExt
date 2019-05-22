@@ -35,4 +35,19 @@ extension Date {
     public init(_ timeInterval: TimeInterval) {
         self.init(timeIntervalSince1970: timeInterval)
     }
+
+    public func formatted(
+        dateStyle: DateFormatter.Style = .none,
+        timeStyle: DateFormatter.Style = .none
+    ) -> String {
+        return DateFormatter.localizedString(from: self, dateStyle: dateStyle, timeStyle: timeStyle)
+    }
+
+    public func formatted(template: String, config: ((DateFormatter) -> Void)? = nil) -> String {
+        let formatter = DateFormatter()
+        formatter.locale = .current
+        formatter.setLocalizedDateFormatFromTemplate(template)
+        config?(formatter)
+        return formatter.string(from: self)
+    }
 }
