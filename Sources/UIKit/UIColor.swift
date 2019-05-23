@@ -26,6 +26,10 @@
 import UIKit
 
 extension UIColor {
+    public enum Profile {
+        case sRGB, displayP3
+    }
+
     public struct RGBA {
         public var red: CGFloat = 0
         public var green: CGFloat = 0
@@ -34,7 +38,7 @@ extension UIColor {
 
         public init() {}
 
-        public init(hex: Int, alpha: CGFloat) {
+        public init(_ hex: Int, alpha: CGFloat) {
             red = CGFloat(hex / 0x10000 % 0x100) / 0xff
             green = CGFloat(hex / 0x100 % 0x100) / 0xff
             blue = CGFloat(hex % 0x100) / 0xff
@@ -42,27 +46,27 @@ extension UIColor {
         }
     }
 
+    public static var defaultProfile = Profile.sRGB
+
     public var rgba: RGBA {
         var r = RGBA()
         getRed(&r.red, green: &r.green, blue: &r.blue, alpha: &r.alpha)
         return r
     }
 
-    public convenience init(rgba: RGBA) {
-        self.init(red: rgba.red, green: rgba.green, blue: rgba.blue, alpha: rgba.alpha)
+    public convenience init(rgba: RGBA, profile: Profile? = nil) {
+        switch profile ?? UIColor.defaultProfile {
+        case .sRGB: self.init(red: rgba.red, green: rgba.green, blue: rgba.blue, alpha: rgba.alpha)
+        case .displayP3:
+            if #available(iOS 10.0, *) {
+                self.init(displayP3Red: rgba.red, green: rgba.green, blue: rgba.blue, alpha: rgba.alpha)
+            } else {
+                self.init(red: rgba.red, green: rgba.green, blue: rgba.blue, alpha: rgba.alpha)
+            }
+        }
     }
 
-    @available(iOS 10.0, *)
-    public convenience init(displayP3RGBA rgba: RGBA) {
-        self.init(displayP3Red: rgba.red, green: rgba.green, blue: rgba.blue, alpha: rgba.alpha)
-    }
-
-    public convenience init(hex: Int, alpha: CGFloat = 1) {
-        self.init(rgba: RGBA(hex: hex, alpha: alpha))
-    }
-
-    @available(iOS 10.0, *)
-    public convenience init(displayP3Hex hex: Int, alpha: CGFloat = 1) {
-        self.init(displayP3RGBA: RGBA(hex: hex, alpha: alpha))
+    public convenience init(_ hex: Int, alpha: CGFloat = 1, profile: Profile? = nil) {
+        self.init(rgba: RGBA(hex, alpha: alpha), profile: profile)
     }
 }
