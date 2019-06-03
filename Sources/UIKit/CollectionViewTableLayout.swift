@@ -27,10 +27,7 @@ import UIKit
 
 @available(iOS 10.0, *)
 open class CollectionViewTableLayout: UICollectionViewFlowLayout {
-    public static let automaticDimension: CGFloat = -1
-
-    @IBInspectable open var itemDimension: CGFloat = CollectionViewTableLayout.automaticDimension
-        { didSet { invalidateLayout() } }
+    @IBInspectable open var itemDimension: CGFloat = 50 { didSet { invalidateLayout() } }
     @IBInspectable open var estimatedItemDimension: CGFloat = 0 { didSet { invalidateLayout() } }
     @IBInspectable open var headerDimension: CGFloat = 0 { didSet { invalidateLayout() } }
     @IBInspectable open var footerDimension: CGFloat = 0 { didSet { invalidateLayout() } }
@@ -57,8 +54,7 @@ open class CollectionViewTableLayout: UICollectionViewFlowLayout {
             footerReferenceSize = CGSize(width: collectionView.bounds.width, height: footerDimension)
         }
 
-        itemSize = itemDimension == CollectionViewTableLayout.automaticDimension ?
-            UICollectionViewFlowLayout.automaticSize : size
+        itemSize = size
         estimatedItemSize = estimatedItemDimension == 0 ? .zero : estimatedSize
     }
 
@@ -69,6 +65,14 @@ open class CollectionViewTableLayout: UICollectionViewFlowLayout {
         case .vertical: fallthrough
         @unknown default: return collectionView.bounds.width != newBounds.width
         }
+    }
+}
+
+open class AutoSizeCollectionView: UICollectionView {
+    open override func reloadData() {
+        super.reloadData()
+        // Fix crash when scrolling back after `reloadData`.
+        layoutIfNeeded()
     }
 }
 
