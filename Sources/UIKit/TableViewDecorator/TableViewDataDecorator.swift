@@ -32,8 +32,9 @@ open class TableViewDataDecorator<Collection>: TableViewDecorator, DataDecorator
     public typealias View = UITableView
     public typealias Cell = UITableViewCell
     public typealias SectionView = UITableViewHeaderFooterView
-    public typealias Section = Collection
     public typealias Item = Collection.Element
+    public typealias HeaderItem = Collection
+    public typealias FooterItem = Collection
 
     open var data: Collection { didSet { tableView?.reloadData() } }
 
@@ -42,15 +43,15 @@ open class TableViewDataDecorator<Collection>: TableViewDecorator, DataDecorator
     }
 
     private let cellFor: CellFor
-    private let headerFor: SectionViewFor?
-    private let footerFor: SectionViewFor?
+    private let headerFor: HeaderFor?
+    private let footerFor: FooterFor?
     private let added: ((UITableView?) -> ())?
 
     public required init(
         _ data: Collection,
         cellFor: @escaping CellFor,
-        headerFor: SectionViewFor? = nil,
-        footerFor: SectionViewFor? = nil,
+        headerFor: HeaderFor? = nil,
+        footerFor: FooterFor? = nil,
         added: ((UITableView?) -> ())? = nil
     ) {
         self.data = data
@@ -83,17 +84,19 @@ open class TableViewDataDecorator<Collection>: TableViewDecorator, DataDecorator
     }
 }
 
-open class TableViewSectionDataDecorator<Collection>: TableViewDecorator, DataDecorator
+open class TableViewSectionDataDecorator<Collection, Items, HI, FI>: TableViewDecorator, DataDecorator
     where Collection: RandomAccessCollection,
     Collection.Index == Int,
-    Collection.Element: RandomAccessCollection,
-    Collection.Element.Index == Int
+    Collection.Element == SectionItem<Items, HI, FI>,
+    Items: RandomAccessCollection,
+    Items.Index == Int
 {
     public typealias View = UITableView
     public typealias Cell = UITableViewCell
     public typealias SectionView = UITableViewHeaderFooterView
-    public typealias Section = Collection.Element
-    public typealias Item = Collection.Element.Element
+    public typealias Item = Items.Element
+    public typealias HeaderItem = HI
+    public typealias FooterItem = FI
 
     open var data: Collection { didSet { tableView?.reloadData() } }
 
@@ -102,15 +105,15 @@ open class TableViewSectionDataDecorator<Collection>: TableViewDecorator, DataDe
     }
 
     private let cellFor: CellFor
-    private let headerFor: SectionViewFor?
-    private let footerFor: SectionViewFor?
+    private let headerFor: HeaderFor?
+    private let footerFor: FooterFor?
     private let added: ((UITableView?) -> ())?
 
     public required init(
         _ data: Collection,
         cellFor: @escaping CellFor,
-        headerFor: SectionViewFor? = nil,
-        footerFor: SectionViewFor? = nil,
+        headerFor: HeaderFor? = nil,
+        footerFor: FooterFor? = nil,
         added: ((UITableView?) -> ())? = nil
     ) {
         self.data = data
@@ -125,20 +128,20 @@ open class TableViewSectionDataDecorator<Collection>: TableViewDecorator, DataDe
     }
 
     open override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data[section].count
+        return data[section].items.count
     }
 
     open override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return cellFor(tableView, indexPath, data[indexPath.section][indexPath.item])
+        return cellFor(tableView, indexPath, data[indexPath.section].items[indexPath.item])
     }
 
     open override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return headerFor?(tableView, IndexPath(row: 0, section: section), data[section]) ??
+        return headerFor?(tableView, IndexPath(row: 0, section: section), data[section].header) ??
             super.tableView(tableView, viewForHeaderInSection: section)
     }
 
     open override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return footerFor?(tableView, IndexPath(row: 0, section: section), data[section]) ??
+        return footerFor?(tableView, IndexPath(row: 0, section: section), data[section].footer) ??
             super.tableView(tableView, viewForFooterInSection: section)
     }
 }

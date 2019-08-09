@@ -30,19 +30,21 @@ public protocol DataDecorator: AnyObject {
     associatedtype Cell
     associatedtype SectionView
     associatedtype Collection
-    associatedtype Section
     associatedtype Item
+    associatedtype HeaderItem
+    associatedtype FooterItem
 
     typealias CellFor = (View, IndexPath, Item) -> Cell
-    typealias SectionViewFor = (View, IndexPath, Section) -> SectionView
+    typealias HeaderFor = (View, IndexPath, HeaderItem) -> SectionView
+    typealias FooterFor = (View, IndexPath, FooterItem) -> SectionView
 
     var data: Collection { get set }
 
     init(
         _ data: Collection,
         cellFor: @escaping CellFor,
-        headerFor: SectionViewFor?,
-        footerFor: SectionViewFor?,
+        headerFor: HeaderFor?,
+        footerFor: FooterFor?,
         added: ((View?) -> ())?
     )
 }
@@ -51,8 +53,8 @@ extension DataDecorator {
     public init<C: UIView, Header: UIView, Footer: UIView>(
         _ data: Collection,
         configCell: @escaping (C, IndexPath, Item) -> (),
-        configHeader: ((Header, IndexPath, Section) -> ())? = nil,
-        configFooter: ((Footer, IndexPath, Section) -> ())? = nil
+        configHeader: ((Header, IndexPath, HeaderItem) -> ())? = nil,
+        configFooter: ((Footer, IndexPath, FooterItem) -> ())? = nil
     ) {
         self.init(
             data,
@@ -97,8 +99,9 @@ open class CollectionViewDataDecorator<Collection>: CollectionViewDecorator, Dat
     public typealias View = UICollectionView
     public typealias Cell = UICollectionViewCell
     public typealias SectionView = UICollectionReusableView
-    public typealias Section = Collection
     public typealias Item = Collection.Element
+    public typealias HeaderItem = Collection
+    public typealias FooterItem = Collection
 
     open var data: Collection { didSet { collectionView?.reloadData() } }
 
@@ -107,15 +110,15 @@ open class CollectionViewDataDecorator<Collection>: CollectionViewDecorator, Dat
     }
 
     private let cellFor: CellFor
-    private let headerFor: SectionViewFor?
-    private let footerFor: SectionViewFor?
+    private let headerFor: HeaderFor?
+    private let footerFor: FooterFor?
     private let added: ((UICollectionView?) -> ())?
 
     public required init(
         _ data: Collection,
         cellFor: @escaping CellFor,
-        headerFor: SectionViewFor? = nil,
-        footerFor: SectionViewFor? = nil,
+        headerFor: HeaderFor? = nil,
+        footerFor: FooterFor? = nil,
         added: ((UICollectionView?) -> ())? = nil
     ) {
         self.data = data
@@ -163,17 +166,31 @@ open class CollectionViewDataDecorator<Collection>: CollectionViewDecorator, Dat
     }
 }
 
-open class CollectionViewSectionDataDecorator<Collection>: CollectionViewDecorator, DataDecorator
+public struct SectionItem<Items, Header, Footer> where Items: RandomAccessCollection, Items.Index == Int {
+    public var items: Items
+    public var header: Header
+    public var footer: Footer
+
+    public init(items: Items, header: Header, footer: Footer) {
+        self.items = items
+        self.header = header
+        self.footer = footer
+    }
+}
+
+open class CollectionViewSectionDataDecorator<Collection, Items, HI, FI>: CollectionViewDecorator, DataDecorator
     where Collection: RandomAccessCollection,
     Collection.Index == Int,
-    Collection.Element: RandomAccessCollection,
-    Collection.Element.Index == Int
+    Collection.Element == SectionItem<Items, HI, FI>,
+    Items: RandomAccessCollection,
+    Items.Index == Int
 {
     public typealias View = UICollectionView
     public typealias Cell = UICollectionViewCell
     public typealias SectionView = UICollectionReusableView
-    public typealias Section = Collection.Element
-    public typealias Item = Collection.Element.Element
+    public typealias Item = Items.Element
+    public typealias HeaderItem = HI
+    public typealias FooterItem = FI
 
     open var data: Collection { didSet { collectionView?.reloadData() } }
 
@@ -182,15 +199,15 @@ open class CollectionViewSectionDataDecorator<Collection>: CollectionViewDecorat
     }
 
     private let cellFor: CellFor
-    private let headerFor: SectionViewFor?
-    private let footerFor: SectionViewFor?
+    private let headerFor: HeaderFor?
+    private let footerFor: FooterFor?
     private let added: ((UICollectionView?) -> ())?
 
     public required init(
         _ data: Collection,
         cellFor: @escaping CellFor,
-        headerFor: SectionViewFor? = nil,
-        footerFor: SectionViewFor? = nil,
+        headerFor: HeaderFor? = nil,
+        footerFor: FooterFor? = nil,
         added: ((UICollectionView?) -> ())? = nil
     ) {
         self.data = data
@@ -208,14 +225,14 @@ open class CollectionViewSectionDataDecorator<Collection>: CollectionViewDecorat
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return data[section].count
+        return data[section].items.count
     }
 
     open override func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        return cellFor(collectionView, indexPath, data[indexPath.section][indexPath.item])
+        return cellFor(collectionView, indexPath, data[indexPath.section].items[indexPath.item])
     }
 
     open override func collectionView(
@@ -228,9 +245,9 @@ open class CollectionViewSectionDataDecorator<Collection>: CollectionViewDecorat
 
         switch kind {
         case UICollectionView.elementKindSectionHeader:
-            view = headerFor?(collectionView, indexPath, section)
+            view = headerFor?(collectionView, indexPath, section.header)
         case UICollectionView.elementKindSectionFooter:
-            view = footerFor?(collectionView, indexPath, section)
+            view = footerFor?(collectionView, indexPath, section.footer)
         default:
             view = nil
         }
