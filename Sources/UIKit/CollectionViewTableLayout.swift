@@ -116,7 +116,13 @@ open class NibAutoHeightCollectionViewCell: NibCollectionViewCell {
             verticalFittingPriority: .fittingSizeLevel
         )
     }
+ 
   open  override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
-       return targetSize
+       if #available(iOS 13.0, *) {
+         return targetSize
+       } else {
+        return super.systemLayoutSizeFitting(targetSize, withHorizontalFittingPriority: horizontalFittingPriority, verticalFittingPriority: verticalFittingPriority)
+       }
+    
     }
 }
