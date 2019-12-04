@@ -77,71 +77,43 @@ open class AutoSizeCollectionView: UICollectionView {
 }
 
 open class AutoWidthCollectionViewCell: UICollectionViewCell {
-    open override func systemLayoutSizeFitting(_ targetSize: CGSize) -> CGSize {
-        return systemLayoutSizeFitting(
-            targetSize,
-            withHorizontalFittingPriority: .fittingSizeLevel,
-            verticalFittingPriority: .required
-        )
-    }
-    open override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
-       return systemLayoutSizeFitting(
-            targetSize,
-            withHorizontalFittingPriority: .required,
-            verticalFittingPriority: .fittingSizeLevel
-        )
-    }
+//    open override func systemLayoutSizeFitting(_ targetSize: CGSize) -> CGSize {
+//        return systemLayoutSizeFitting(
+//            targetSize,
+//            withHorizontalFittingPriority: .fittingSizeLevel,
+//            verticalFittingPriority: .required
+//        )
+//    }
 }
 
 open class AutoHeightCollectionViewCell: UICollectionViewCell {
-    open override func systemLayoutSizeFitting(_ targetSize: CGSize) -> CGSize {
-        return systemLayoutSizeFitting(
-            targetSize,
-            withHorizontalFittingPriority: .required,
-            verticalFittingPriority: .fittingSizeLevel
-        )
-    }
-    open override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
-       return systemLayoutSizeFitting(
-            targetSize,
-            withHorizontalFittingPriority: .required,
-            verticalFittingPriority: .fittingSizeLevel
-        )
-    }
+//    open override func systemLayoutSizeFitting(_ targetSize: CGSize) -> CGSize {
+//        return systemLayoutSizeFitting(
+//            targetSize,
+//            withHorizontalFittingPriority: .required,
+//            verticalFittingPriority: .fittingSizeLevel
+//        )
+//    }
 }
 
 @available(iOS 9.0, *)
 open class NibAutoWidthCollectionViewCell: NibCollectionViewCell {
-    open override func systemLayoutSizeFitting(_ targetSize: CGSize) -> CGSize {
-        return systemLayoutSizeFitting(
-            targetSize,
-            withHorizontalFittingPriority: .fittingSizeLevel,
-            verticalFittingPriority: .required
-        )
-    }
-    open override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
-       return systemLayoutSizeFitting(
-            targetSize,
-            withHorizontalFittingPriority: .required,
-            verticalFittingPriority: .fittingSizeLevel
-        )
-    }
+//    open override func systemLayoutSizeFitting(_ targetSize: CGSize) -> CGSize {
+//        return systemLayoutSizeFitting(
+//            targetSize,
+//            withHorizontalFittingPriority: .fittingSizeLevel,
+//            verticalFittingPriority: .required
+//        )
+//    }
 }
 
 @available(iOS 9.0, *)
 open class NibAutoHeightCollectionViewCell: NibCollectionViewCell {
-    open override func systemLayoutSizeFitting(_ targetSize: CGSize) -> CGSize {
-        return systemLayoutSizeFitting(
-            targetSize,
-            withHorizontalFittingPriority: .required,
-            verticalFittingPriority: .fittingSizeLevel
-        )
-    }
-   open override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
-          return systemLayoutSizeFitting(
-               targetSize,
-               withHorizontalFittingPriority: .required,
-               verticalFittingPriority: .fittingSizeLevel
-           )
-       }
+//    open override func systemLayoutSizeFitting(_ targetSize: CGSize) -> CGSize {
+//        return systemLayoutSizeFitting(
+//            targetSize,
+//            withHorizontalFittingPriority: .required,
+//            verticalFittingPriority: .fittingSizeLevel
+//        )
+//    }
 }
