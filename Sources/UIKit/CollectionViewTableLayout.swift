@@ -84,25 +84,11 @@ open class AutoWidthCollectionViewCell: UICollectionViewCell {
             verticalFittingPriority: .required
         )
     }
-    open override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
-       return systemLayoutSizeFitting(
-            targetSize,
-            withHorizontalFittingPriority: .required,
-            verticalFittingPriority: .fittingSizeLevel
-        )
-    }
 }
 
 open class AutoHeightCollectionViewCell: UICollectionViewCell {
     open override func systemLayoutSizeFitting(_ targetSize: CGSize) -> CGSize {
         return systemLayoutSizeFitting(
-            targetSize,
-            withHorizontalFittingPriority: .required,
-            verticalFittingPriority: .fittingSizeLevel
-        )
-    }
-    open override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
-       return systemLayoutSizeFitting(
             targetSize,
             withHorizontalFittingPriority: .required,
             verticalFittingPriority: .fittingSizeLevel
@@ -119,13 +105,6 @@ open class NibAutoWidthCollectionViewCell: NibCollectionViewCell {
             verticalFittingPriority: .required
         )
     }
-    open override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
-       return systemLayoutSizeFitting(
-            targetSize,
-            withHorizontalFittingPriority: .required,
-            verticalFittingPriority: .fittingSizeLevel
-        )
-    }
 }
 
 @available(iOS 9.0, *)
@@ -137,11 +116,4 @@ open class NibAutoHeightCollectionViewCell: NibCollectionViewCell {
             verticalFittingPriority: .fittingSizeLevel
         )
     }
-   open override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
-          return systemLayoutSizeFitting(
-               targetSize,
-               withHorizontalFittingPriority: .required,
-               verticalFittingPriority: .fittingSizeLevel
-           )
-       }
 }
